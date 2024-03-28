@@ -18,6 +18,7 @@ import (
 	"github.com/roboninc/xlsx/internal"
 	"github.com/roboninc/xlsx/internal/ml"
 	"github.com/roboninc/xlsx/types"
+	options "github.com/roboninc/xlsx/types/options/sheet"
 )
 
 type sheetInfo struct {

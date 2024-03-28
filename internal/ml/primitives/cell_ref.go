@@ -43,7 +43,7 @@ func CellRefFromIndexes(colIndex, rowIndex int) CellRef {
 	var colName string
 	i := colIndex + 1
 	for i > 0 {
-		colName = string((i-1)%26+65) + colName
+		colName = string(byte((i-1)%26+65)) + colName
 		i = (i - 1) / 26
 	}
 

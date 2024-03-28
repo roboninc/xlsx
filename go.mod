@@ -6,3 +6,5 @@ require (
 	github.com/roboninc/ooxml v1.1.2
 	github.com/stretchr/testify v1.3.0
 )
+
+replace github.com/roboninc/ooxml => ../ooxml

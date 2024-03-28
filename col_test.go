@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/roboninc/xlsx/format/styles"
+	options "github.com/roboninc/xlsx/types/options/column"
 	"github.com/stretchr/testify/require"
 )
 

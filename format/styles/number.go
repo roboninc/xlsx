@@ -4,6 +4,8 @@
 
 package styles
 
+import number "github.com/roboninc/xlsx/internal/number_format"
+
 // NumberFormat is option to update Info with provided custom format of number, but respecting built-in number formats
 func NumberFormat(format string) func(*Info) {
 	return func(s *Info) {

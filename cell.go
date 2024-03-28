@@ -13,6 +13,7 @@ import (
 
 	"github.com/roboninc/xlsx/format/styles"
 	"github.com/roboninc/xlsx/internal/ml"
+	number "github.com/roboninc/xlsx/internal/number_format"
 	"github.com/roboninc/xlsx/internal/number_format/convert"
 	"github.com/roboninc/xlsx/types"
 	"github.com/roboninc/xlsx/types/hyperlink"

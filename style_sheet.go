@@ -10,6 +10,7 @@ import (
 	"github.com/roboninc/xlsx/format/styles"
 	"github.com/roboninc/xlsx/internal"
 	"github.com/roboninc/xlsx/internal/ml"
+	number "github.com/roboninc/xlsx/internal/number_format"
 
 	// to link unexported
 	_ "unsafe"

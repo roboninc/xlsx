@@ -13,6 +13,7 @@ import (
 	"github.com/roboninc/xlsx/format/conditional"
 	"github.com/roboninc/xlsx/internal/ml"
 	"github.com/roboninc/xlsx/types"
+	options "github.com/roboninc/xlsx/types/options/sheet"
 )
 
 type sheetReadStream struct {

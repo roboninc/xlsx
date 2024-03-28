@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/roboninc/xlsx/internal/ml/primitives"
+	options "github.com/roboninc/xlsx/types/options/sheet"
 	"github.com/stretchr/testify/require"
 )
 

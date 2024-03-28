@@ -7,6 +7,7 @@ package xlsx
 import (
 	"github.com/roboninc/xlsx/format/styles"
 	"github.com/roboninc/xlsx/internal/ml"
+	options "github.com/roboninc/xlsx/types/options/row"
 )
 
 // Row is a higher level object that wraps ml.Row with functionality. Inherits functionality of Range

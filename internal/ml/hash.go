@@ -5,6 +5,7 @@
 package ml
 
 import (
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -227,7 +228,7 @@ func (s *StringItem) Hash() index.Code {
 
 	result := []string{
 		string(si.Text),
-		string(si.PhoneticPr.Hash()),
+		fmt.Sprintf("%x", si.PhoneticPr.Hash()),
 	}
 
 	if si.RPh != nil {

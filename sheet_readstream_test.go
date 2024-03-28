@@ -8,6 +8,7 @@ import (
 	"testing"
 
 	"github.com/roboninc/xlsx"
+	options "github.com/roboninc/xlsx/types/options/sheet"
 	"github.com/stretchr/testify/require"
 )
 

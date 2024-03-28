@@ -7,6 +7,7 @@ package xlsx
 import (
 	"github.com/roboninc/xlsx/format/conditional"
 	"github.com/roboninc/xlsx/types"
+	options "github.com/roboninc/xlsx/types/options/sheet"
 )
 
 const errorNotSupported = "not supported"
