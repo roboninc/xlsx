@@ -5,23 +5,23 @@
 package xlsx
 
 import (
-	"github.com/plandem/ooxml"
+	"github.com/roboninc/ooxml"
 
 	//init enums for marshal/unmarshal
-	_ "github.com/plandem/xlsx/format/conditional"
-	_ "github.com/plandem/xlsx/format/conditional/rule"
-	_ "github.com/plandem/xlsx/format/styles"
-	_ "github.com/plandem/xlsx/internal/ml"
-	_ "github.com/plandem/xlsx/internal/ml/primitives"
-	_ "github.com/plandem/xlsx/types"
-	_ "github.com/plandem/xlsx/types/comment"
-	_ "github.com/plandem/xlsx/types/hyperlink"
-	_ "github.com/plandem/xlsx/types/options/column"
-	_ "github.com/plandem/xlsx/types/options/row"
-	_ "github.com/plandem/xlsx/types/options/sheet"
+	_ "github.com/roboninc/xlsx/format/conditional"
+	_ "github.com/roboninc/xlsx/format/conditional/rule"
+	_ "github.com/roboninc/xlsx/format/styles"
+	_ "github.com/roboninc/xlsx/internal/ml"
+	_ "github.com/roboninc/xlsx/internal/ml/primitives"
+	_ "github.com/roboninc/xlsx/types"
+	_ "github.com/roboninc/xlsx/types/comment"
+	_ "github.com/roboninc/xlsx/types/hyperlink"
+	_ "github.com/roboninc/xlsx/types/options/column"
+	_ "github.com/roboninc/xlsx/types/options/row"
+	_ "github.com/roboninc/xlsx/types/options/sheet"
 )
 
-//Open opens a XLSX file with name or io.Reader
+// Open opens a XLSX file with name or io.Reader
 func Open(f interface{}) (*Spreadsheet, error) {
 	doc, err := ooxml.Open(f, newSpreadsheet)
 	if err != nil {
@@ -35,7 +35,7 @@ func Open(f interface{}) (*Spreadsheet, error) {
 	return nil, ooxml.ErrorUnknownPackage(Spreadsheet{})
 }
 
-//New creates and returns a new XLSX document
+// New creates and returns a new XLSX document
 func New() *Spreadsheet {
 	if doc, err := newSpreadsheet(ooxml.NewPackage(nil)); err == nil {
 		if xlDoc, ok := doc.(*Spreadsheet); ok {

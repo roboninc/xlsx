@@ -5,24 +5,25 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/ml"
 	"reflect"
+
+	"github.com/roboninc/xlsx/internal/ml"
 )
 
-//DefaultDirectStyle is ID for any default direct style than depends on context:
+// DefaultDirectStyle is ID for any default direct style than depends on context:
 // E.g. for cell it will be equal to NamedStyle 'Normal', for hyperlink - NamedStyle 'Hyperlink'
 const DefaultDirectStyle = DirectStyleID(0)
 
-//Info is objects that holds combined information about cell styling
+// Info is objects that holds combined information about cell styling
 type Info struct {
 	styleInfo *ml.DiffStyle
 	namedInfo *ml.NamedStyleInfo
 }
 
-//Option is helper type to set options for styles formatting
+// Option is helper type to set options for styles formatting
 type Option func(o *Info)
 
-//New creates and returns Info object with requested options
+// New creates and returns Info object with requested options
 func New(options ...Option) *Info {
 	s := &Info{
 		&ml.DiffStyle{
@@ -50,15 +51,15 @@ func New(options ...Option) *Info {
 	return s
 }
 
-//Set sets new options for style
+// Set sets new options for style
 func (s *Info) Set(options ...Option) {
 	for _, o := range options {
 		o(s)
 	}
 }
 
-//nolint
-//private method used by stylesheet manager to unpack Info
+// nolint
+// private method used by stylesheet manager to unpack Info
 func from(f *Info) (font *ml.Font, fill *ml.Fill, alignment *ml.CellAlignment, numFormat *ml.NumberFormat, protection *ml.CellProtection, border *ml.Border, namedInfo *ml.NamedStyleInfo) {
 	style := f.styleInfo
 	named := f.namedInfo
@@ -175,7 +176,7 @@ func from(f *Info) (font *ml.Font, fill *ml.Fill, alignment *ml.CellAlignment, n
 	return
 }
 
-//private method used by to convert Info to ml.RichFont
+// private method used by to convert Info to ml.RichFont
 func toRichFont(f *Info) *ml.RichFont {
 	style := f.styleInfo
 

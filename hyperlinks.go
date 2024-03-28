@@ -7,21 +7,22 @@ package xlsx
 import (
 	"errors"
 	"fmt"
-	sharedML "github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
-	"github.com/plandem/xlsx/types/hyperlink"
+
+	sharedML "github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
+	"github.com/roboninc/xlsx/types/hyperlink"
 
 	// to link unexported
 	_ "unsafe"
 )
 
-//go:linkname fromHyperlinkInfo github.com/plandem/xlsx/types/hyperlink.from
+//go:linkname fromHyperlinkInfo github.com/roboninc/xlsx/types/hyperlink.from
 func fromHyperlinkInfo(info *hyperlink.Info) (hyperlink *ml.Hyperlink, format interface{}, err error)
 
-//go:linkname toHyperlinkInfo github.com/plandem/xlsx/types/hyperlink.to
+//go:linkname toHyperlinkInfo github.com/roboninc/xlsx/types/hyperlink.to
 func toHyperlinkInfo(hyperlink *ml.Hyperlink, targetInfo string, styleID styles.DirectStyleID) *hyperlink.Info
 
 type hyperlinks struct {
@@ -29,12 +30,12 @@ type hyperlinks struct {
 	defaultStyleID styles.DirectStyleID
 }
 
-//newHyperlinks creates an object that implements hyperlinks functionality
+// newHyperlinks creates an object that implements hyperlinks functionality
 func newHyperlinks(sheet *sheetInfo) *hyperlinks {
 	return &hyperlinks{sheet: sheet, defaultStyleID: -1}
 }
 
-//Add adds a new hyperlink info for provided bounds, where link can be string or Info
+// Add adds a new hyperlink info for provided bounds, where link can be string or Info
 func (h *hyperlinks) Add(bounds types.Bounds, link interface{}) (interface{}, error) {
 	//check if hyperlink has style and if not, then add default
 	if h.defaultStyleID == -1 {
@@ -115,7 +116,7 @@ func (h *hyperlinks) Add(bounds types.Bounds, link interface{}) (interface{}, er
 	return format, nil
 }
 
-//Get returns a resolved hyperlink info for provided ref or nil if there is no any hyperlink
+// Get returns a resolved hyperlink info for provided ref or nil if there is no any hyperlink
 func (h *hyperlinks) Get(ref types.CellRef) *hyperlink.Info {
 	links := h.sheet.ml.Hyperlinks.Items
 	if len(links) > 0 {
@@ -132,7 +133,7 @@ func (h *hyperlinks) Get(ref types.CellRef) *hyperlink.Info {
 	return nil
 }
 
-//Remove removes hyperlink info for bounds
+// Remove removes hyperlink info for bounds
 func (h *hyperlinks) Remove(bounds types.Bounds) {
 	if len(h.sheet.ml.Hyperlinks.Items) > 0 {
 		newLinks := make([]*ml.Hyperlink, 0, len(h.sheet.ml.Hyperlinks.Items))

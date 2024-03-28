@@ -5,10 +5,10 @@
 package xlsx
 
 import (
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/types/options/row"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRow(t *testing.T) {

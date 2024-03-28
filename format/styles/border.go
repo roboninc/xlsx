@@ -5,8 +5,8 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/color"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/color"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type borderTopSegmentOption byte
@@ -27,7 +27,7 @@ type borderOption struct {
 	Horizontal borderHorizontalSegmentOption
 }
 
-//Border is a 'namespace' for all possible settings for border
+// Border is a 'namespace' for all possible settings for border
 var Border borderOption
 
 func (b *borderOption) DiagonalUp(s *Info) {

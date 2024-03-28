@@ -5,10 +5,11 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/color"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx/internal/color"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/stretchr/testify/require"
 )
 
 func TestBorder(t *testing.T) {

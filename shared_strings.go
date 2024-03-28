@@ -5,14 +5,14 @@
 package xlsx
 
 import (
-	"github.com/plandem/ooxml"
-	"github.com/plandem/ooxml/index"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/ooxml"
+	"github.com/roboninc/ooxml/index"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//sharedStrings is a higher level object that wraps ml.SharedStrings with functionality
+// sharedStrings is a higher level object that wraps ml.SharedStrings with functionality
 type sharedStrings struct {
 	ml    ml.SharedStrings
 	index index.Index
@@ -42,7 +42,7 @@ func (ss *sharedStrings) afterLoad() {
 	}
 }
 
-//get returns string item stored at index
+// get returns string item stored at index
 func (ss *sharedStrings) get(index int) *ml.StringItem {
 	ss.file.LoadIfRequired(ss.afterLoad)
 
@@ -53,12 +53,12 @@ func (ss *sharedStrings) get(index int) *ml.StringItem {
 	return nil
 }
 
-//addString adds a new string and return index for it
+// addString adds a new string and return index for it
 func (ss *sharedStrings) addString(value string) int {
 	return ss.addText(&ml.StringItem{Text: primitives.Text(value)})
 }
 
-//addText adds a new StringItem and return index for it
+// addText adds a new StringItem and return index for it
 func (ss *sharedStrings) addText(si *ml.StringItem) int {
 	ss.file.LoadIfRequired(ss.afterLoad)
 

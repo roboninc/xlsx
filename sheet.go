@@ -5,9 +5,8 @@
 package xlsx
 
 import (
-	"github.com/plandem/xlsx/format/conditional"
-	"github.com/plandem/xlsx/types"
-	"github.com/plandem/xlsx/types/options/sheet"
+	"github.com/roboninc/xlsx/format/conditional"
+	"github.com/roboninc/xlsx/types"
 )
 
 const errorNotSupported = "not supported"
@@ -16,7 +15,7 @@ const errorNotSupportedStream = "not supported in stream mode"
 
 type SheetMode byte
 
-//List of all possible open modes for Sheet. Mode applies only once, except SheetModeStream and few modes can be combined. E.g.: SheetModeStream, SheetModeMultiPhase
+// List of all possible open modes for Sheet. Mode applies only once, except SheetModeStream and few modes can be combined. E.g.: SheetModeStream, SheetModeMultiPhase
 const (
 	sheetModeUnknown SheetMode = 0
 	sheetModeRead    SheetMode = 1 << iota
@@ -26,7 +25,7 @@ const (
 	SheetModeIgnoreDimension //Ignore dimension information during reading or skip it during writing
 )
 
-//Sheet is interface for a higher level object that wraps ml.Worksheet with functionality
+// Sheet is interface for a higher level object that wraps ml.Worksheet with functionality
 type Sheet interface {
 	//Cell returns a cell for 0-based indexes
 	Cell(colIndex, rowIndex int) *Cell

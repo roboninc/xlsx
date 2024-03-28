@@ -5,21 +5,21 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/color"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/color"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type patternOption byte
 type gradientOption byte
 
-//N.B.: only one kind of fill is allowed by standard
+// N.B.: only one kind of fill is allowed by standard
 type fillOption struct {
 	Pattern  patternOption
 	Gradient gradientOption
 }
 
-//Fill is a 'namespace' for all possible settings for fill
+// Fill is a 'namespace' for all possible settings for fill
 var Fill fillOption
 
 func (f *fillOption) Color(rgb string) Option {

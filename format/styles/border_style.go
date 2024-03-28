@@ -5,10 +5,10 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//List of all possible values for BorderStyleType
+// List of all possible values for BorderStyleType
 const (
 	_ primitives.BorderStyleType = iota
 	BorderStyleNone

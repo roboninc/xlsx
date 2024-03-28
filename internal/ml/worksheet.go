@@ -6,14 +6,15 @@ package ml
 
 import (
 	"encoding/xml"
-	"github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+
+	"github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//Formula is a direct mapping of XSD ST_Formula
+// Formula is a direct mapping of XSD ST_Formula
 type Formula string
 
-//Worksheet is a direct mapping of XSD CT_Worksheet
+// Worksheet is a direct mapping of XSD CT_Worksheet
 type Worksheet struct {
 	XMLName               xml.Name                  `xml:"http://schemas.openxmlformats.org/spreadsheetml/2006/main worksheet"`
 	RIDName               ml.RIDName                `xml:",attr"`
@@ -58,17 +59,17 @@ type Worksheet struct {
 	ExtLst                *ml.Reserved              `xml:"extLst,omitempty"`
 }
 
-//SheetDimension is a direct mapping of XSD CT_SheetDimension
+// SheetDimension is a direct mapping of XSD CT_SheetDimension
 type SheetDimension struct {
 	Bounds primitives.Bounds `xml:"ref,attr"`
 }
 
-//LegacyDrawing is a direct mapping of XSD CT_LegacyDrawing
+// LegacyDrawing is a direct mapping of XSD CT_LegacyDrawing
 type LegacyDrawing struct {
 	RID ml.RID `xml:"id,attr"`
 }
 
-//Col is a direct mapping of XSD CT_Col
+// Col is a direct mapping of XSD CT_Col
 type Col struct {
 	Min          int           `xml:"min,attr"`
 	Max          int           `xml:"max,attr"`
@@ -82,7 +83,7 @@ type Col struct {
 	Collapsed    bool          `xml:"collapsed,attr,omitempty"`
 }
 
-//Row is a direct mapping of XSD CT_Row
+// Row is a direct mapping of XSD CT_Row
 type Row struct {
 	Cells        []*Cell       `xml:"c"`
 	ExtLst       *ml.Reserved  `xml:"extLst,omitempty"`
@@ -100,7 +101,7 @@ type Row struct {
 	Phonetic     bool          `xml:"ph,attr,omitempty"`
 }
 
-//Cell is a direct mapping of XSD CT_Cell
+// Cell is a direct mapping of XSD CT_Cell
 type Cell struct {
 	Formula   *CellFormula        `xml:"f,omitempty"`
 	Value     string              `xml:"v,omitempty"`
@@ -114,7 +115,7 @@ type Cell struct {
 	Vm        ml.OptionalIndex    `xml:"vm,attr,omitempty"`
 }
 
-//CellFormula is a direct mapping of XSD CT_CellFormula
+// CellFormula is a direct mapping of XSD CT_CellFormula
 type CellFormula struct {
 	Aca     bool                       `xml:"aca,attr,omitempty"`
 	Dt2D    bool                       `xml:"dt2D,attr,omitempty"`
@@ -131,12 +132,12 @@ type CellFormula struct {
 	Si      ml.OptionalIndex           `xml:"si,attr,omitempty"`
 }
 
-//MergeCell is a direct mapping of XSD CT_MergeCell
+// MergeCell is a direct mapping of XSD CT_MergeCell
 type MergeCell struct {
 	Bounds primitives.Bounds `xml:"ref,attr"`
 }
 
-//SheetView is a direct mapping of XSD CT_SheetView
+// SheetView is a direct mapping of XSD CT_SheetView
 type SheetView struct {
 	Pane                     *ml.Reserved       `xml:"pane,omitempty"`
 	Selection                []*ml.Reserved     `xml:"selection,omitempty"`
@@ -163,7 +164,7 @@ type SheetView struct {
 	WorkbookViewId           uint               `xml:"workbookViewId,attr"`
 }
 
-//Hyperlink is a direct mapping of XSD CT_Hyperlink
+// Hyperlink is a direct mapping of XSD CT_Hyperlink
 type Hyperlink struct {
 	Bounds   primitives.Bounds `xml:"ref,attr"`
 	Location string            `xml:"location,attr,omitempty"`
@@ -172,7 +173,7 @@ type Hyperlink struct {
 	RID      ml.RID            `xml:"id,attr,omitempty"`
 }
 
-//ConditionalFormatting is a direct mapping of XSD CT_ConditionalFormatting
+// ConditionalFormatting is a direct mapping of XSD CT_ConditionalFormatting
 type ConditionalFormatting struct {
 	Pivot  bool                  `xml:"pivot,attr,omitempty"`
 	Bounds primitives.BoundsList `xml:"sqref,attr"`
@@ -180,7 +181,7 @@ type ConditionalFormatting struct {
 	ExtLst *ml.Reserved          `xml:"extLst,omitempty"`
 }
 
-//ConditionalRule is a direct mapping of XSD CT_CfRule
+// ConditionalRule is a direct mapping of XSD CT_CfRule
 type ConditionalRule struct {
 	Formula      []Formula                        `xml:"formula,omitempty"`
 	ColorScale   *ColorScale                      `xml:"colorScale,omitempty"`
@@ -202,7 +203,7 @@ type ConditionalRule struct {
 	StdDev       int                              `xml:"stdDev,attr,omitempty"`
 }
 
-//ConditionValue is a direct mapping of XSD CT_Cfvo
+// ConditionValue is a direct mapping of XSD CT_Cfvo
 type ConditionValue struct {
 	ExtLst           *ml.Reserved                  `xml:"extLst,omitempty"`
 	Type             primitives.ConditionValueType `xml:"type,attr"`
@@ -210,13 +211,13 @@ type ConditionValue struct {
 	GreaterThanEqual *bool                         `xml:"gte,attr,omitempty"`
 }
 
-//ColorScale is a direct mapping of XSD CT_ColorScale
+// ColorScale is a direct mapping of XSD CT_ColorScale
 type ColorScale struct {
 	Values []*ConditionValue `xml:"cfvo"`  //minimum 2 values
 	Colors []*Color          `xml:"color"` //minimum 2 values
 }
 
-//DataBar is a direct mapping of XSD CT_DataBar
+// DataBar is a direct mapping of XSD CT_DataBar
 type DataBar struct {
 	Values    []*ConditionValue `xml:"cfvo"` //2 values only
 	Color     *Color            `xml:"color"`
@@ -225,7 +226,7 @@ type DataBar struct {
 	ShowValue *bool             `xml:"showValue,attr,omitempty"`
 }
 
-//IconSet is a direct mapping of XSD ST_IconSetType
+// IconSet is a direct mapping of XSD ST_IconSetType
 type IconSet struct {
 	Values    []*ConditionValue      `xml:"cfvo"` //minimum 2 values
 	Type      primitives.IconSetType `xml:"iconSet,attr,omitempty"`
@@ -234,7 +235,7 @@ type IconSet struct {
 	Percent   *bool                  `xml:"percent,attr,omitempty"`
 }
 
-//AutoFilter is direct mapping of XSD CT_AutoFilter
+// AutoFilter is direct mapping of XSD CT_AutoFilter
 type AutoFilter struct {
 	FilterColumn *[]*FilterColumn  `xml:"filterColumn,omitempty"`
 	SortState    *ml.Reserved      `xml:"sortState,omitempty"`
@@ -242,7 +243,7 @@ type AutoFilter struct {
 	Bounds       primitives.Bounds `xml:"ref,attr"`
 }
 
-//FilterColumn is direct mapping of XSD CT_FilterColumn
+// FilterColumn is direct mapping of XSD CT_FilterColumn
 type FilterColumn struct {
 	Filters       *ml.Reserved `xml:"filters,omitempty"`
 	Top10         *ml.Reserved `xml:"top10,omitempty"`

@@ -6,20 +6,21 @@ package xlsx
 
 import (
 	"fmt"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
+
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
 )
 
 type mergedCells struct {
 	sheet *sheetInfo
 }
 
-//newMergedCells creates an object that implements merged cells functionality
+// newMergedCells creates an object that implements merged cells functionality
 func newMergedCells(sheet *sheetInfo) *mergedCells {
 	return &mergedCells{sheet: sheet}
 }
 
-//Resolve check if requested cIdx and rIdx related to merged range and if so, then translate indexes to valid values
+// Resolve check if requested cIdx and rIdx related to merged range and if so, then translate indexes to valid values
 func (m *mergedCells) Resolve(cIdx, rIdx int) (int, int, bool) {
 	merged := false
 	mergedCells := m.sheet.ml.MergeCells.Items
@@ -33,7 +34,7 @@ func (m *mergedCells) Resolve(cIdx, rIdx int) (int, int, bool) {
 	return cIdx, rIdx, merged
 }
 
-//Merge adds a merged cells info for bounds
+// Merge adds a merged cells info for bounds
 func (m *mergedCells) Add(bounds types.Bounds) error {
 	//let's check existing merged cells for overlapping
 	for _, mc := range m.sheet.ml.MergeCells.Items {
@@ -50,7 +51,7 @@ func (m *mergedCells) Add(bounds types.Bounds) error {
 	return nil
 }
 
-//Remove removes merged cells info for bounds
+// Remove removes merged cells info for bounds
 func (m *mergedCells) Remove(bounds types.Bounds) {
 	if len(m.sheet.ml.MergeCells.Items) > 0 {
 		newMergedCells := make([]*ml.MergeCell, 0, len(m.sheet.ml.MergeCells.Items))

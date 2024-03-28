@@ -5,12 +5,12 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type namedStyleType int
 
-//List of all possible types for NamedStyle
+// List of all possible types for NamedStyle
 const (
 	NamedStyleNormal namedStyleType = iota
 	_NamedStyleRowLevel
@@ -158,7 +158,7 @@ func init() {
 	}
 }
 
-//NamedStyle is option to update Info with provided settings for NamedStyleInfo
+// NamedStyle is option to update Info with provided settings for NamedStyleInfo
 func NamedStyle(name interface{}) func(*Info) {
 	return func(s *Info) {
 		if n, ok := name.(string); ok {

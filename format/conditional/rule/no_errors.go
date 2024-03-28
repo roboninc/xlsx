@@ -5,16 +5,16 @@
 package rule
 
 import (
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type noErrorsRule struct {
 	baseRule
 }
 
-//NoErrors is helper object to set specific options for rule
+// NoErrors is helper object to set specific options for rule
 var NoErrors noErrorsRule
 
 func (x noErrorsRule) initIfRequired(r *Info) {

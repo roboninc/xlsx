@@ -6,11 +6,12 @@ package ml
 
 import (
 	"encoding/xml"
-	"github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+
+	"github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//Workbook is a direct mapping of XSD CT_Workbook
+// Workbook is a direct mapping of XSD CT_Workbook
 type Workbook struct {
 	XMLName             xml.Name              `xml:"http://schemas.openxmlformats.org/spreadsheetml/2006/main workbook"`
 	RIDName             ml.RIDName            `xml:",attr"`
@@ -36,7 +37,7 @@ type Workbook struct {
 	Conformance         string                `xml:"conformance,attr,omitempty"`
 }
 
-//FileVersion is a direct mapping of XSD CT_FileVersion
+// FileVersion is a direct mapping of XSD CT_FileVersion
 type FileVersion struct {
 	AppName      string `xml:"appName,attr,omitempty"`
 	CodeName     string `xml:"codeName,attr,omitempty"`
@@ -45,7 +46,7 @@ type FileVersion struct {
 	RupBuild     string `xml:"rupBuild,attr,omitempty"`
 }
 
-//WorkbookPr is a direct mapping of XSD CT_WorkbookPr
+// WorkbookPr is a direct mapping of XSD CT_WorkbookPr
 type WorkbookPr struct {
 	Date1904                   bool                       `xml:"date1904,attr,omitempty"`
 	ShowBorderUnselectedTables bool                       `xml:"showBorderUnselectedTables,attr,omitempty"`
@@ -67,7 +68,7 @@ type WorkbookPr struct {
 	CodeName                   string                     `xml:"codeName,attr,omitempty"`
 }
 
-//BookView is a direct mapping of XSD CT_BookView
+// BookView is a direct mapping of XSD CT_BookView
 type BookView struct {
 	ExtLst                 *ml.Reserved              `xml:"extLst,omitempty"`
 	Visibility             primitives.VisibilityType `xml:"visibility,attr,omitempty"`
@@ -85,7 +86,7 @@ type BookView struct {
 	ActiveTab              int                       `xml:"activeTab,attr,omitempty"`
 }
 
-//Sheet is a direct mapping of XSD CT_Sheet
+// Sheet is a direct mapping of XSD CT_Sheet
 type Sheet struct {
 	Name    string                    `xml:"name,attr"`
 	SheetID uint                      `xml:"sheetId,attr"`
@@ -93,7 +94,7 @@ type Sheet struct {
 	RID     ml.RID                    `xml:"id,attr"`
 }
 
-//ExternalReference is a direct mapping of XSD CT_ExternalReference
+// ExternalReference is a direct mapping of XSD CT_ExternalReference
 type ExternalReference struct {
 	RID ml.RID `xml:"id,attr,omitempty"`
 }

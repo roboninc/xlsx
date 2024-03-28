@@ -5,16 +5,16 @@
 package rule
 
 import (
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type averageRule struct {
 	baseRule
 }
 
-//Average is helper object to set specific options for rule
+// Average is helper object to set specific options for rule
 var Average averageRule
 
 func (x averageRule) initIfRequired(r *Info) {

@@ -6,16 +6,17 @@ package rule
 
 import (
 	"fmt"
-	"github.com/plandem/xlsx/internal/color"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+
+	"github.com/roboninc/xlsx/internal/color"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type colorScale3Rule struct {
 	baseRule
 }
 
-//ColorScale3 is helper object to set specific options for rule
+// ColorScale3 is helper object to set specific options for rule
 var ColorScale3 colorScale3Rule
 
 func (x colorScale3Rule) initIfRequired(r *Info) {

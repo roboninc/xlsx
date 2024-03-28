@@ -5,12 +5,12 @@
 package xlsx
 
 import (
-	"github.com/plandem/ooxml"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
+	"github.com/roboninc/ooxml"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
 )
 
-//workbook is a higher level object that wraps ml.Workbook with functionality
+// workbook is a higher level object that wraps ml.Workbook with functionality
 type workbook struct {
 	ml   ml.Workbook
 	doc  *Spreadsheet

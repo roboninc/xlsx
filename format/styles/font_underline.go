@@ -5,10 +5,10 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//List of all possible values for UnderlineType
+// List of all possible values for UnderlineType
 const (
 	UnderlineTypeSingle           primitives.UnderlineType = "single"
 	UnderlineTypeDouble           primitives.UnderlineType = "double"

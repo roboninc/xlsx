@@ -6,28 +6,29 @@ package conditional
 
 import (
 	"fmt"
-	"github.com/plandem/xlsx/format/conditional/rule"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+
+	"github.com/roboninc/xlsx/format/conditional/rule"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 
 	// to link unexported
 	_ "unsafe"
 )
 
-//go:linkname fromRule github.com/plandem/xlsx/format/conditional/rule.fromRule
+//go:linkname fromRule github.com/roboninc/xlsx/format/conditional/rule.fromRule
 func fromRule(info *rule.Info) (*ml.ConditionalRule, *styles.Info)
 
-//Info is objects that holds combined information about cell conditional format
+// Info is objects that holds combined information about cell conditional format
 type Info struct {
 	info  *ml.ConditionalFormatting
 	rules []*rule.Info
 }
 
-//Option is helper type to set options for conditional formatting
+// Option is helper type to set options for conditional formatting
 type Option func(o *Info)
 
-//New creates and returns Info object with requested options
+// New creates and returns Info object with requested options
 func New(options ...Option) *Info {
 	f := &Info{
 		info:  &ml.ConditionalFormatting{},
@@ -38,14 +39,14 @@ func New(options ...Option) *Info {
 	return f
 }
 
-//Set sets new options for conditional
+// Set sets new options for conditional
 func (f *Info) Set(options ...Option) {
 	for _, o := range options {
 		o(f)
 	}
 }
 
-//Validate the conditional formatting information
+// Validate the conditional formatting information
 func (f *Info) Validate() error {
 	if len(f.info.Bounds) == 0 {
 		return fmt.Errorf("no any refs for conditional formatting")
@@ -73,12 +74,12 @@ func (f *Info) Validate() error {
 	return nil
 }
 
-//Pivot sets pivot flag of conditional formatting
+// Pivot sets pivot flag of conditional formatting
 func Pivot(cf *Info) {
 	cf.info.Pivot = true
 }
 
-//Refs sets references that will be used for this conditional formatting
+// Refs sets references that will be used for this conditional formatting
 func Refs(refs ...primitives.Ref) Option {
 	return func(cf *Info) {
 		for _, ref := range refs {
@@ -87,7 +88,7 @@ func Refs(refs ...primitives.Ref) Option {
 	}
 }
 
-//AddRule adds another rule to conditional formatting
+// AddRule adds another rule to conditional formatting
 func AddRule(options ...rule.Option) Option {
 	return func(cf *Info) {
 		r := rule.New(options...)
@@ -98,7 +99,7 @@ func AddRule(options ...rule.Option) Option {
 	}
 }
 
-//private method used to unpack Info
+// private method used to unpack Info
 func from(f *Info) (*ml.ConditionalFormatting, []*styles.Info) {
 	if len(f.rules) == 0 {
 		return nil, nil

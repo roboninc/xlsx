@@ -5,11 +5,12 @@
 package xlsx
 
 import (
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
+	"github.com/stretchr/testify/require"
 )
 
 func TestToRichFont(t *testing.T) {

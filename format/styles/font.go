@@ -5,14 +5,14 @@
 package styles
 
 import (
-	"github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/internal/color"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/internal/color"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type fontOption byte
 
-//Font is a 'namespace' for all possible settings for font
+// Font is a 'namespace' for all possible settings for font
 var Font fontOption
 
 func (f *fontOption) Name(name string) Option {

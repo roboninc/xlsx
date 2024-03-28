@@ -5,12 +5,13 @@
 package ml
 
 import (
-	"github.com/plandem/ooxml/index"
 	"strconv"
 	"strings"
+
+	"github.com/roboninc/ooxml/index"
 )
 
-//Hash builds hash code for all required values of CellAlignment to use as unique index
+// Hash builds hash code for all required values of CellAlignment to use as unique index
 func (a *CellAlignment) Hash() index.Code {
 	alignment := a
 	if alignment == nil {
@@ -30,7 +31,7 @@ func (a *CellAlignment) Hash() index.Code {
 	}, ":"))
 }
 
-//Hash builds hash code for all required values of Color to use as unique index
+// Hash builds hash code for all required values of Color to use as unique index
 func (c *Color) Hash() index.Code {
 	color := c
 	if color == nil {
@@ -58,7 +59,7 @@ func (c *Color) Hash() index.Code {
 	return index.Hash(strings.Join(result, ":"))
 }
 
-//Hash builds hash code for all required values of Border to use as unique index
+// Hash builds hash code for all required values of Border to use as unique index
 func (border *Border) Hash() index.Code {
 	var b Border
 
@@ -125,7 +126,7 @@ func (border *Border) Hash() index.Code {
 	}, ":"))
 }
 
-//Hash builds hash code for all required values of Fill to use as unique index
+// Hash builds hash code for all required values of Fill to use as unique index
 func (fill *Fill) Hash() index.Code {
 	var f Fill
 
@@ -166,7 +167,7 @@ func (fill *Fill) Hash() index.Code {
 	return index.Hash(strings.Join(result, ":"))
 }
 
-//Hash builds hash code for all required values of Font to use as unique index
+// Hash builds hash code for all required values of Font to use as unique index
 func (f *Font) Hash() index.Code {
 	font := f
 	if font == nil {
@@ -191,7 +192,7 @@ func (f *Font) Hash() index.Code {
 	}, ":"))
 }
 
-//Hash builds hash code for all required values of NumberFormat to use as unique index
+// Hash builds hash code for all required values of NumberFormat to use as unique index
 func (f *NumberFormat) Hash() index.Code {
 	format := f
 	if format == nil {
@@ -204,7 +205,7 @@ func (f *NumberFormat) Hash() index.Code {
 	}, ":"))
 }
 
-//Hash builds hash code for all required values of CellProtection to use as unique index
+// Hash builds hash code for all required values of CellProtection to use as unique index
 func (p *CellProtection) Hash() index.Code {
 	protection := p
 	if protection == nil {
@@ -217,7 +218,7 @@ func (p *CellProtection) Hash() index.Code {
 	}, ":"))
 }
 
-//Hash builds hash code for all required values of StringItem to use as unique index
+// Hash builds hash code for all required values of StringItem to use as unique index
 func (s *StringItem) Hash() index.Code {
 	si := s
 	if si == nil {
@@ -249,7 +250,7 @@ func (s *StringItem) Hash() index.Code {
 	return index.Hash(strings.Join(result, ":"))
 }
 
-//Hash builds hash code for all required values of NamedStyle to use as unique index
+// Hash builds hash code for all required values of NamedStyle to use as unique index
 func (ns *NamedStyle) Hash() index.Code {
 	style := ns
 	if style == nil {
@@ -275,7 +276,7 @@ func (ns *NamedStyle) Hash() index.Code {
 	}, ":"))
 }
 
-//Hash builds hash code for all required values of DirectStyle to use as unique index
+// Hash builds hash code for all required values of DirectStyle to use as unique index
 func (ds *DirectStyle) Hash() index.Code {
 	style := ds
 	if style == nil {
@@ -286,7 +287,7 @@ func (ds *DirectStyle) Hash() index.Code {
 	return index.Hash(s.Hash().String() + ":" + strconv.FormatInt(int64(style.XfId), 10))
 }
 
-//Hash builds hash code for all required values of DiffStyle to use as unique index
+// Hash builds hash code for all required values of DiffStyle to use as unique index
 func (ds *DiffStyle) Hash() index.Code {
 	style := ds
 	if style == nil {

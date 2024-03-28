@@ -5,9 +5,10 @@
 package xlsx
 
 import (
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
 	"math"
+
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
 )
 
 type sheetReadWrite struct {
@@ -36,12 +37,12 @@ func (s *sheetReadWrite) setDimension(cols, rows int, resize bool) {
 	s.ml.Dimension = &ml.SheetDimension{Bounds: types.BoundsFromIndexes(0, 0, cols, rows)}
 }
 
-//SetDimension sets total number of cols and rows in sheet
+// SetDimension sets total number of cols and rows in sheet
 func (s *sheetReadWrite) SetDimension(cols, rows int) {
 	s.setDimension(cols, rows, true)
 }
 
-//Cell returns a cell for 0-based indexes
+// Cell returns a cell for 0-based indexes
 func (s *sheetReadWrite) Cell(colIndex, rowIndex int) *Cell {
 	s.expandIfRequired(colIndex, rowIndex)
 
@@ -60,7 +61,7 @@ func (s *sheetReadWrite) Cell(colIndex, rowIndex int) *Cell {
 	return &Cell{ml: data, sheet: s.sheetInfo}
 }
 
-//Row returns a row for 0-based index
+// Row returns a row for 0-based index
 func (s *sheetReadWrite) Row(index int) *Row {
 	s.expandIfRequired(0, index)
 
@@ -71,7 +72,7 @@ func (s *sheetReadWrite) Row(index int) *Row {
 	}
 }
 
-//refreshRefs update refs for all rows/cells starting from row with 0-based index
+// refreshRefs update refs for all rows/cells starting from row with 0-based index
 func (s *sheetReadWrite) refreshAllRefs(index int) {
 	for iRow, rowMax := index, len(s.ml.SheetData); iRow < rowMax; iRow++ {
 		row := s.ml.SheetData[iRow]
@@ -85,7 +86,7 @@ func (s *sheetReadWrite) refreshAllRefs(index int) {
 	}
 }
 
-//refreshColRefs update refs only for cells at row 0-based index rowIndex and starting 0-based index colIndex
+// refreshColRefs update refs only for cells at row 0-based index rowIndex and starting 0-based index colIndex
 func (s *sheetReadWrite) refreshColRefs(colIndex, rowIndex int) {
 	for iCol, colMax := colIndex, len(s.ml.SheetData[rowIndex].Cells); iCol < colMax; iCol++ {
 		cell := s.ml.SheetData[rowIndex].Cells[iCol]
@@ -95,7 +96,7 @@ func (s *sheetReadWrite) refreshColRefs(colIndex, rowIndex int) {
 	}
 }
 
-//InsertRow inserts a row at 0-based index and returns it. Using to insert a row between other rows.
+// InsertRow inserts a row at 0-based index and returns it. Using to insert a row between other rows.
 func (s *sheetReadWrite) InsertRow(index int) *Row {
 	//getting current height
 	_, rows := s.Dimension()
@@ -115,7 +116,7 @@ func (s *sheetReadWrite) InsertRow(index int) *Row {
 	return s.Row(index)
 }
 
-//DeleteRow deletes a row at 0-based index
+// DeleteRow deletes a row at 0-based index
 func (s *sheetReadWrite) DeleteRow(index int) {
 	s.expandIfRequired(0, index)
 
@@ -129,7 +130,7 @@ func (s *sheetReadWrite) DeleteRow(index int) {
 	s.setDimension(cols, rows-1, false)
 }
 
-//Col returns a col for 0-based index
+// Col returns a col for 0-based index
 func (s *sheetReadWrite) Col(index int) *Col {
 	s.expandIfRequired(index, 0)
 
@@ -141,7 +142,7 @@ func (s *sheetReadWrite) Col(index int) *Col {
 	}
 }
 
-//InsertCol inserts a col at 0-based index and returns it. Using to insert a col between other cols.
+// InsertCol inserts a col at 0-based index and returns it. Using to insert a col between other cols.
 func (s *sheetReadWrite) InsertCol(index int) *Col {
 	//getting current width
 	cols, _ := s.Dimension()
@@ -163,7 +164,7 @@ func (s *sheetReadWrite) InsertCol(index int) *Col {
 	return s.Col(index)
 }
 
-//DeleteCol deletes a col at 0-based index
+// DeleteCol deletes a col at 0-based index
 func (s *sheetReadWrite) DeleteCol(index int) {
 	s.expandIfRequired(index, 0)
 	s.columns.Delete(index)
@@ -181,21 +182,21 @@ func (s *sheetReadWrite) DeleteCol(index int) {
 	s.setDimension(cols-1, rows, false)
 }
 
-//Cols returns iterator for all cols of sheet
+// Cols returns iterator for all cols of sheet
 func (s *sheetReadWrite) Cols() ColIterator {
 	cols, rows := s.Dimension()
 	s.expandIfRequired(cols-1, rows-1)
 	return newColIterator(s)
 }
 
-//Rows returns iterator for all rows of sheet
+// Rows returns iterator for all rows of sheet
 func (s *sheetReadWrite) Rows() RowIterator {
 	cols, rows := s.Dimension()
 	s.expandIfRequired(cols-1, rows-1)
 	return newRowIterator(s)
 }
 
-//resolveDimension check if there is a 'dimension' information(optional) and if there is no any, then calculate it from existing data
+// resolveDimension check if there is a 'dimension' information(optional) and if there is no any, then calculate it from existing data
 func (s *sheetReadWrite) resolveDimension(force bool) {
 	if !force && (s.ml.Dimension != nil && !s.ml.Dimension.Bounds.IsEmpty()) {
 		// We need to fix 'optimized' case, when Dimension holds only last part of Ref (e.g., C10 instead of instead of A1:C10).
@@ -223,7 +224,7 @@ func (s *sheetReadWrite) resolveDimension(force bool) {
 	s.ml.Dimension = &ml.SheetDimension{Bounds: types.BoundsFromIndexes(0, 0, int(maxWidth), int(maxHeight))}
 }
 
-//expandOnInit expands grid to required dimension and copy existing data
+// expandOnInit expands grid to required dimension and copy existing data
 func (s *sheetReadWrite) expandOnInit() {
 	force := (s.sheetMode & SheetModeIgnoreDimension) != 0
 	s.resolveDimension(force)
@@ -262,7 +263,7 @@ func (s *sheetReadWrite) expandOnInit() {
 	s.setDimension(nextWidth, nextHeight, false)
 }
 
-//expandIfRequired expands grid to required dimension
+// expandIfRequired expands grid to required dimension
 func (s *sheetReadWrite) expandIfRequired(colIndex, rowIndex int) {
 	if !s.isInitialized {
 		s.expandOnInit()
@@ -313,7 +314,7 @@ func (s *sheetReadWrite) expandIfRequired(colIndex, rowIndex int) {
 	s.setDimension(nextWidth, nextHeight, false)
 }
 
-//shrinkIfRequired shrinks grid to minimal size and set actual dimension. Called right before packing sheet data.
+// shrinkIfRequired shrinks grid to minimal size and set actual dimension. Called right before packing sheet data.
 func (s *sheetReadWrite) shrinkIfRequired() {
 	grid := make([]*ml.Row, 0, len(s.ml.SheetData))
 
@@ -338,7 +339,7 @@ func (s *sheetReadWrite) shrinkIfRequired() {
 	s.resolveDimension(true)
 }
 
-//BeforeMarshalXML shrinks data to optimize output and returns related ML information for marshaling
+// BeforeMarshalXML shrinks data to optimize output and returns related ML information for marshaling
 func (s *sheetReadWrite) BeforeMarshalXML() interface{} {
 	s.shrinkIfRequired()
 	s.isInitialized = false
@@ -354,7 +355,7 @@ func (s *sheetReadWrite) BeforeMarshalXML() interface{} {
 	return &s.ml
 }
 
-//afterOpen is callback that will be called right after requesting an already existing sheet. By default, it does nothing
+// afterOpen is callback that will be called right after requesting an already existing sheet. By default, it does nothing
 func (s *sheetReadWrite) afterOpen() {
 	//make a grid
 	s.file.LoadIfRequired(s.expandOnInit)
@@ -366,7 +367,7 @@ func (s *sheetReadWrite) afterOpen() {
 	s.file.MarkAsUpdated()
 }
 
-//afterCreate initializes a new sheet
+// afterCreate initializes a new sheet
 func (s *sheetReadWrite) afterCreate(name string) {
 	//register file
 	s.sheetInfo.afterCreate(name)

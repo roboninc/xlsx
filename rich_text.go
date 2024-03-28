@@ -6,20 +6,21 @@ package xlsx
 
 import (
 	"fmt"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
 	"reflect"
+
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 
 	// to link unexported
 	_ "unsafe"
 )
 
-//go:linkname toRichFont github.com/plandem/xlsx/format/styles.toRichFont
+//go:linkname toRichFont github.com/roboninc/xlsx/format/styles.toRichFont
 func toRichFont(f *styles.Info) *ml.RichFont
 
-//nolint
+// nolint
 func toRichText(parts ...interface{}) (*ml.StringItem, *styles.Info, error) {
 	si := &ml.StringItem{}
 	length := 0

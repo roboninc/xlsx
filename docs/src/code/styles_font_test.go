@@ -1,7 +1,7 @@
 package code
 
 import (
-	"github.com/plandem/xlsx/format/styles"
+	"github.com/roboninc/xlsx/format/styles"
 )
 
 func Example_stylesFont() {

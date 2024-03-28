@@ -5,15 +5,15 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//FontCharsetType is alias of original primitives.FontCharsetType type because more can be used by system and to:
+// FontCharsetType is alias of original primitives.FontCharsetType type because more can be used by system and to:
 // 1) make it public
 // 2) forbid usage of integers directly
 type FontCharsetType = primitives.FontCharsetType
 
-//List of all possible values for FontCharsetType
+// List of all possible values for FontCharsetType
 const (
 	FontCharsetANSI        FontCharsetType = 0
 	FontCharsetDEFAULT     FontCharsetType = 1

@@ -6,11 +6,12 @@ package validator_test
 
 import (
 	"fmt"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/validator"
-	"github.com/stretchr/testify/assert"
 	"strings"
 	"testing"
+
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/validator"
+	"github.com/stretchr/testify/assert"
 )
 
 func TestIsUrl(t *testing.T) {

@@ -7,17 +7,17 @@ package xlsx
 import (
 	"archive/zip"
 	"fmt"
-	"github.com/plandem/ooxml"
-	sharedML "github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/format/conditional"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
-	"github.com/plandem/xlsx/types/options/sheet"
 	"math"
 	"path/filepath"
 	"reflect"
+
+	"github.com/roboninc/ooxml"
+	sharedML "github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/format/conditional"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
 )
 
 type sheetInfo struct {
@@ -38,7 +38,7 @@ type sheetInfo struct {
 	index         int
 }
 
-//isCellEmpty checks if cell is empty - has no value and any formatting
+// isCellEmpty checks if cell is empty - has no value and any formatting
 func isCellEmpty(c *ml.Cell) bool {
 	if c != nil && (*c != ml.Cell{Ref: c.Ref}) {
 		return false
@@ -47,7 +47,7 @@ func isCellEmpty(c *ml.Cell) bool {
 	return true
 }
 
-//isRowEmpty checks if row is empty (supposed that only non empty cells here) - has no cells
+// isRowEmpty checks if row is empty (supposed that only non empty cells here) - has no cells
 func isRowEmpty(r *ml.Row) bool {
 	return r == nil ||
 		reflect.DeepEqual(r, &ml.Row{Ref: r.Ref, Cells: []*ml.Cell{}}) ||
@@ -55,7 +55,7 @@ func isRowEmpty(r *ml.Row) bool {
 		reflect.DeepEqual(r, &ml.Row{})
 }
 
-//newSheetInfo creates a new sheetInfo and link it with workbook
+// newSheetInfo creates a new sheetInfo and link it with workbook
 func newSheetInfo(f interface{}, doc *Spreadsheet) *sheetInfo {
 	index := -1
 
@@ -124,7 +124,7 @@ func newSheetInfo(f interface{}, doc *Spreadsheet) *sheetInfo {
 	return sheet
 }
 
-//some private methods used objects that use Sheet implementation and have no access to internal information
+// some private methods used objects that use Sheet implementation and have no access to internal information
 func (s *sheetInfo) mode() SheetMode {
 	return s.sheetMode
 }
@@ -133,24 +133,24 @@ func (s *sheetInfo) info() *sheetInfo {
 	return s
 }
 
-//Name returns name of sheet
+// Name returns name of sheet
 func (s *sheetInfo) Name() string {
 	return s.workbook.ml.Sheets[s.index].Name
 }
 
-//SetName sets a name for sheet
+// SetName sets a name for sheet
 func (s *sheetInfo) SetName(name string) {
 	s.workbook.ml.Sheets[s.index].Name = ooxml.UniqueName(name, s.workbook.doc.SheetNames(), internal.ExcelSheetNameLimit)
 	s.workbook.file.MarkAsUpdated()
 }
 
-//SetOptions sets options for sheet
+// SetOptions sets options for sheet
 func (s *sheetInfo) SetOptions(o *options.Info) {
 	s.workbook.ml.Sheets[s.index].State = o.Visibility
 	s.workbook.file.MarkAsUpdated()
 }
 
-//SetActive sets the sheet as active
+// SetActive sets the sheet as active
 func (s *sheetInfo) SetActive() {
 	//set activate from workbook side
 	if len(s.workbook.ml.BookViews.Items) == 0 {
@@ -169,7 +169,7 @@ func (s *sheetInfo) SetActive() {
 	s.workbook.file.MarkAsUpdated()
 }
 
-//Dimension returns total number of cols and rows in sheet
+// Dimension returns total number of cols and rows in sheet
 func (s *sheetInfo) Dimension() (cols int, rows int) {
 	if s.ml.Dimension == nil || s.ml.Dimension.Bounds.IsEmpty() {
 		return 0, 0
@@ -180,73 +180,73 @@ func (s *sheetInfo) Dimension() (cols int, rows int) {
 	return
 }
 
-//CellByRef returns a cell for ref
+// CellByRef returns a cell for ref
 func (s *sheetInfo) CellByRef(cellRef types.CellRef) *Cell {
 	cid, rid := cellRef.ToIndexes()
 	return s.sheet.Cell(cid, rid)
 }
 
-//Range returns a range for indexes
+// Range returns a range for indexes
 func (s *sheetInfo) Range(fromCol, fromRow, toCol, toRow int) *Range {
 	return newRange(s.sheet, fromCol, toCol, fromRow, toRow)
 }
 
-//RangeByRef returns a range for ref
+// RangeByRef returns a range for ref
 func (s *sheetInfo) RangeByRef(ref types.Ref) *Range {
 	return newRangeFromRef(s.sheet, ref)
 }
 
-//MergeRows merges rows between fromIndex and toIndex
+// MergeRows merges rows between fromIndex and toIndex
 func (s *sheetInfo) MergeRows(fromIndex, toIndex int) error {
 	return s.Range(0, fromIndex, internal.ExcelColumnLimit, toIndex).Merge()
 }
 
-//MergeCols merges cols between fromIndex and toIndex
+// MergeCols merges cols between fromIndex and toIndex
 func (s *sheetInfo) MergeCols(fromIndex, toIndex int) error {
 	return s.Range(fromIndex, 0, toIndex, internal.ExcelRowLimit).Merge()
 }
 
-//SplitRows splits rows between fromIndex and toIndex
+// SplitRows splits rows between fromIndex and toIndex
 func (s *sheetInfo) SplitRows(fromIndex, toIndex int) {
 	s.Range(0, fromIndex, internal.ExcelColumnLimit, toIndex).Split()
 }
 
-//SplitCols splits cols between fromIndex and toIndex
+// SplitCols splits cols between fromIndex and toIndex
 func (s *sheetInfo) SplitCols(fromIndex, toIndex int) {
 	s.Range(fromIndex, 0, toIndex, internal.ExcelRowLimit).Split()
 }
 
-//AddConditional adds a new conditional formatting with additional refs if required
+// AddConditional adds a new conditional formatting with additional refs if required
 func (s *sheetInfo) AddConditional(conditional *conditional.Info, refs ...types.Ref) error {
 	return s.conditionals.Add(conditional, refs)
 }
 
-//DeleteConditional deletes a conditional formatting from refs
+// DeleteConditional deletes a conditional formatting from refs
 func (s *sheetInfo) DeleteConditional(refs ...types.Ref) {
 	s.conditionals.Remove(refs)
 }
 
-//AutoFilter adds auto filter in provided Ref range
+// AutoFilter adds auto filter in provided Ref range
 func (s *sheetInfo) AutoFilter(ref types.Ref, settings ...interface{}) {
 	s.filters.AddAuto(ref, settings)
 }
 
-//AddFilter adds a filter to column with index
+// AddFilter adds a filter to column with index
 func (s *sheetInfo) AddFilter(colIndex int, settings ...interface{}) error {
 	return s.filters.Add(colIndex, settings)
 }
 
-//DeleteFilter deletes a filter from column with index
+// DeleteFilter deletes a filter from column with index
 func (s *sheetInfo) DeleteFilter(colIndex int) {
 	s.filters.Remove(colIndex)
 }
 
-//Close frees allocated by sheet resources
+// Close frees allocated by sheet resources
 func (s *sheetInfo) Close() {
 
 }
 
-//afterOpen is callback that will be called right after requesting an already existing sheet. By default, it does nothing
+// afterOpen is callback that will be called right after requesting an already existing sheet. By default, it does nothing
 func (s *sheetInfo) afterOpen() {
 }
 
@@ -263,7 +263,7 @@ func (s *sheetInfo) attachRelationshipsIfRequired() {
 	}
 }
 
-//afterCreate is callback that will be called right after creating a new sheet. By default, it registers sheet at spreadsheet
+// afterCreate is callback that will be called right after creating a new sheet. By default, it registers sheet at spreadsheet
 func (s *sheetInfo) afterCreate(name string) {
 	if len(name) > 0 {
 		s.SetName(name)

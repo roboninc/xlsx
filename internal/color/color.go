@@ -5,11 +5,12 @@
 package color
 
 import (
-	"github.com/plandem/xlsx/internal/ml"
 	"strings"
+
+	"github.com/roboninc/xlsx/internal/ml"
 )
 
-//New create and return ml.Color type for provided value, respecting built-in indexed colors
+// New create and return ml.Color type for provided value, respecting built-in indexed colors
 func New(color string) *ml.Color {
 	color = Normalize(color)
 
@@ -23,7 +24,7 @@ func New(color string) *ml.Color {
 	return &ml.Color{RGB: color}
 }
 
-//Normalize check if color in #RGB format and convert it into ARGB format
+// Normalize check if color in #RGB format and convert it into ARGB format
 func Normalize(color string) string {
 	//normalize color
 	if len(color) > 1 {

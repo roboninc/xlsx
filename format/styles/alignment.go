@@ -5,12 +5,12 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type alignmentOption byte
 
-//Alignment is a 'namespace' for all possible settings for alignment
+// Alignment is a 'namespace' for all possible settings for alignment
 var Alignment alignmentOption
 
 func (f *alignmentOption) VAlign(va primitives.VAlignType) Option {

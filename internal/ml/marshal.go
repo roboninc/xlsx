@@ -6,85 +6,86 @@ package ml
 
 import (
 	"encoding/xml"
-	"github.com/plandem/ooxml/ml"
+
+	"github.com/roboninc/ooxml/ml"
 )
 
-//DiffStyleList is a direct mapping of XSD CT_Dxfs
+// DiffStyleList is a direct mapping of XSD CT_Dxfs
 type DiffStyleList struct {
 	Count int          `xml:"count,attr"`
 	Items []*DiffStyle `xml:"dxf,omitempty"`
 }
 
-//NamedStyleInfoList is a direct mapping of XSD CT_CellStyles
+// NamedStyleInfoList is a direct mapping of XSD CT_CellStyles
 type NamedStyleInfoList struct {
 	Count int               `xml:"count,attr"`
 	Items []*NamedStyleInfo `xml:"cellStyle,omitempty"`
 }
 
-//DirectStyleList is a direct mapping of XSD CT_CellXfs
+// DirectStyleList is a direct mapping of XSD CT_CellXfs
 type DirectStyleList struct {
 	Count int            `xml:"count,attr"`
 	Items []*DirectStyle `xml:"xf,omitempty"`
 }
 
-//NamedStyleList is a direct mapping of XSD cellStyleXfs
+// NamedStyleList is a direct mapping of XSD cellStyleXfs
 type NamedStyleList struct {
 	Count int           `xml:"count,attr"`
 	Items []*NamedStyle `xml:"xf,omitempty"`
 }
 
-//BorderList is a direct mapping of XSD CT_Borders
+// BorderList is a direct mapping of XSD CT_Borders
 type BorderList struct {
 	Count int       `xml:"count,attr"`
 	Items []*Border `xml:"border,omitempty"`
 }
 
-//FontList is a direct mapping of XSD CT_Fonts
+// FontList is a direct mapping of XSD CT_Fonts
 type FontList struct {
 	Count int     `xml:"count,attr"`
 	Items []*Font `xml:"font,omitempty"`
 }
 
-//FillList is a direct mapping of XSD CT_Fills
+// FillList is a direct mapping of XSD CT_Fills
 type FillList struct {
 	Count int     `xml:"count,attr"`
 	Items []*Fill `xml:"fill,omitempty"`
 }
 
-//NumberFormatList is a direct mapping of XSD CT_NumFmts
+// NumberFormatList is a direct mapping of XSD CT_NumFmts
 type NumberFormatList struct {
 	Count int             `xml:"count,attr"`
 	Items []*NumberFormat `xml:"numFmt,omitempty"`
 }
 
-//HyperlinkList is a direct mapping of XSD CT_Hyperlinks
+// HyperlinkList is a direct mapping of XSD CT_Hyperlinks
 type HyperlinkList struct {
 	Items []*Hyperlink `xml:"hyperlink,omitempty"`
 }
 
-//MergedCellList is a direct mapping of XSD CT_MergeCells
+// MergedCellList is a direct mapping of XSD CT_MergeCells
 type MergedCellList struct {
 	Count int          `xml:"count,attr"`
 	Items []*MergeCell `xml:"mergeCell,omitempty"`
 }
 
-//SheetViewList is a direct mapping of XSD CT_SheetViews
+// SheetViewList is a direct mapping of XSD CT_SheetViews
 type SheetViewList struct {
 	Items  []*SheetView `xml:"sheetView,omitempty"`
 	ExtLst *ml.Reserved `xml:"extLst,omitempty"`
 }
 
-//BookViewList is a direct mapping of XSD CT_BookViews
+// BookViewList is a direct mapping of XSD CT_BookViews
 type BookViewList struct {
 	Items []*BookView `xml:"workbookView,omitempty"`
 }
 
-//ExternalReferenceList is a direct mapping of XSD CT_ExternalReferences
+// ExternalReferenceList is a direct mapping of XSD CT_ExternalReferences
 type ExternalReferenceList struct {
 	Items []*ExternalReference `xml:"workbookView,omitempty"`
 }
 
-//MarshalXML marshal DiffStyleList
+// MarshalXML marshal DiffStyleList
 func (r *DiffStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -93,7 +94,7 @@ func (r *DiffStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	return nil
 }
 
-//MarshalXML marshal NamedStyleInfoList
+// MarshalXML marshal NamedStyleInfoList
 func (r *NamedStyleInfoList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -102,7 +103,7 @@ func (r *NamedStyleInfoList) MarshalXML(e *xml.Encoder, start xml.StartElement) 
 	return nil
 }
 
-//MarshalXML marshal DirectStyleList
+// MarshalXML marshal DirectStyleList
 func (r *DirectStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -111,7 +112,7 @@ func (r *DirectStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) err
 	return nil
 }
 
-//MarshalXML marshal NamedStyleList
+// MarshalXML marshal NamedStyleList
 func (r *NamedStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -120,7 +121,7 @@ func (r *NamedStyleList) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	return nil
 }
 
-//MarshalXML marshal BorderList
+// MarshalXML marshal BorderList
 func (r *BorderList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -129,7 +130,7 @@ func (r *BorderList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return nil
 }
 
-//MarshalXML marshal FontList
+// MarshalXML marshal FontList
 func (r *FontList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -138,7 +139,7 @@ func (r *FontList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return nil
 }
 
-//MarshalXML marshal FillList
+// MarshalXML marshal FillList
 func (r *FillList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -147,7 +148,7 @@ func (r *FillList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	return nil
 }
 
-//MarshalXML marshal NumberFormatList
+// MarshalXML marshal NumberFormatList
 func (r *NumberFormatList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -156,7 +157,7 @@ func (r *NumberFormatList) MarshalXML(e *xml.Encoder, start xml.StartElement) er
 	return nil
 }
 
-//MarshalXML marshal HyperlinkList
+// MarshalXML marshal HyperlinkList
 func (r *HyperlinkList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if len(r.Items) > 0 {
 		return e.EncodeElement(*r, start)
@@ -165,7 +166,7 @@ func (r *HyperlinkList) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	return nil
 }
 
-//MarshalXML marshal MergedCellList
+// MarshalXML marshal MergedCellList
 func (r *MergedCellList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if r.Count = len(r.Items); r.Count > 0 {
 		return e.EncodeElement(*r, start)
@@ -174,7 +175,7 @@ func (r *MergedCellList) MarshalXML(e *xml.Encoder, start xml.StartElement) erro
 	return nil
 }
 
-//MarshalXML marshal SheetViewList
+// MarshalXML marshal SheetViewList
 func (r *SheetViewList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if len(r.Items) > 0 {
 		return e.EncodeElement(*r, start)
@@ -183,7 +184,7 @@ func (r *SheetViewList) MarshalXML(e *xml.Encoder, start xml.StartElement) error
 	return nil
 }
 
-//MarshalXML marshal BookViewList
+// MarshalXML marshal BookViewList
 func (r *BookViewList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if len(r.Items) > 0 {
 		return e.EncodeElement(*r, start)
@@ -192,7 +193,7 @@ func (r *BookViewList) MarshalXML(e *xml.Encoder, start xml.StartElement) error 
 	return nil
 }
 
-//MarshalXML marshal ExternalReferenceList
+// MarshalXML marshal ExternalReferenceList
 func (r *ExternalReferenceList) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if len(r.Items) > 0 {
 		return e.EncodeElement(*r, start)
@@ -201,7 +202,7 @@ func (r *ExternalReferenceList) MarshalXML(e *xml.Encoder, start xml.StartElemen
 	return nil
 }
 
-//MarshalXML marshal AutoFilter
+// MarshalXML marshal AutoFilter
 func (r *AutoFilter) MarshalXML(e *xml.Encoder, start xml.StartElement) error {
 	if !r.Bounds.IsEmpty() {
 		return e.EncodeElement(*r, start)

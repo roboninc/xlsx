@@ -5,11 +5,12 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/color"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx/internal/color"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
+	"github.com/stretchr/testify/require"
 )
 
 func TestFont(t *testing.T) {

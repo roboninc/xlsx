@@ -6,17 +6,18 @@ package hyperlink
 
 import (
 	"fmt"
-	sharedML "github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/validator"
-	"github.com/plandem/xlsx/types"
 	"regexp"
 	"strings"
+
+	sharedML "github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/validator"
+	"github.com/roboninc/xlsx/types"
 )
 
-//Info hold advanced settings of hyperlink
+// Info hold advanced settings of hyperlink
 type Info struct {
 	hyperlink *ml.Hyperlink
 	format    interface{}
@@ -24,7 +25,7 @@ type Info struct {
 	linkType hyperlinkType
 }
 
-//Option is helper type to set options for hyperlink
+// Option is helper type to set options for hyperlink
 type Option func(o *Info)
 
 type hyperlinkType byte
@@ -36,7 +37,7 @@ const (
 	hyperlinkTypeFile
 )
 
-//New creates and returns a new Info object that holds settings for hyperlink and related styles
+// New creates and returns a new Info object that holds settings for hyperlink and related styles
 func New(options ...Option) *Info {
 	i := &Info{
 		hyperlink: &ml.Hyperlink{},
@@ -45,15 +46,15 @@ func New(options ...Option) *Info {
 	return i
 }
 
-//Set sets new options for hyperlink
+// Set sets new options for hyperlink
 func (i *Info) Set(options ...Option) {
 	for _, o := range options {
 		o(i)
 	}
 }
 
-//nolint
-//Validate validates hyperlink info and return error in case of invalid settings
+// nolint
+// Validate validates hyperlink info and return error in case of invalid settings
 func (i *Info) Validate() error {
 	switch i.linkType {
 	case hyperlinkTypeUnknown:
@@ -105,7 +106,7 @@ func (i *Info) Validate() error {
 	return nil
 }
 
-//String returns text version of hyperlink info
+// String returns text version of hyperlink info
 func (i *Info) String() string {
 	target := string(i.hyperlink.RID)
 	location := i.hyperlink.Location
@@ -117,28 +118,28 @@ func (i *Info) String() string {
 	return target
 }
 
-//Styles sets style format to requested DirectStyleID or styles.Info
+// Styles sets style format to requested DirectStyleID or styles.Info
 func Styles(s interface{}) Option {
 	return func(i *Info) {
 		i.format = s
 	}
 }
 
-//Tooltip adds a tooltip information for hyperlink
+// Tooltip adds a tooltip information for hyperlink
 func Tooltip(tip string) Option {
 	return func(i *Info) {
 		i.hyperlink.Tooltip = tip
 	}
 }
 
-//Display adds a display information for hyperlink
+// Display adds a display information for hyperlink
 func Display(display string) Option {
 	return func(i *Info) {
 		i.hyperlink.Display = display
 	}
 }
 
-//ToMail sets target to email
+// ToMail sets target to email
 func ToMail(address, subject string) Option {
 	return func(i *Info) {
 		if len(subject) > 0 {
@@ -151,7 +152,7 @@ func ToMail(address, subject string) Option {
 	}
 }
 
-//ToUrl sets target to web site
+// ToUrl sets target to web site
 func ToUrl(address string) Option {
 	return func(i *Info) {
 		i.hyperlink.RID = sharedML.RID(escapeTarget(strings.TrimRight(address, `/`)))
@@ -159,7 +160,7 @@ func ToUrl(address string) Option {
 	}
 }
 
-//ToFile sets target to external file
+// ToFile sets target to external file
 func ToFile(fileName string) Option {
 	return func(i *Info) {
 		//change the directory separator from Unix to DOS
@@ -179,7 +180,7 @@ func ToFile(fileName string) Option {
 	}
 }
 
-//ToRef sets target to ref of sheet with sheetName. Omit sheetName to set location to ref of active sheet
+// ToRef sets target to ref of sheet with sheetName. Omit sheetName to set location to ref of active sheet
 func ToRef(ref types.Ref, sheetName string) Option {
 	return func(i *Info) {
 		if len(ref) > 0 {
@@ -194,7 +195,7 @@ func ToRef(ref types.Ref, sheetName string) Option {
 	}
 }
 
-//ToBookmark sets target to bookmark, that can be named region in xlsx, bookmark of remote file or even site
+// ToBookmark sets target to bookmark, that can be named region in xlsx, bookmark of remote file or even site
 func ToBookmark(location string) Option {
 	return func(i *Info) {
 		if len(location) > 0 {
@@ -210,45 +211,47 @@ func ToBookmark(location string) Option {
 
 /*
 ToTarget is very close to HYPERLINK function of Excel
- https://support.office.com/en-us/article/hyperlink-function-333c7ce6-c5ae-4164-9c47-7de9b76f577f
 
-	a) to target: "target" or "[target]"
-	b) to location at target: "[target]location" or "target#location"
+	 https://support.office.com/en-us/article/hyperlink-function-333c7ce6-c5ae-4164-9c47-7de9b76f577f
+
+		a) to target: "target" or "[target]"
+		b) to location at target: "[target]location" or "target#location"
 
 Here are some examples of supported values:
-	- same file, same sheet
-	=HYPERLINK("#A1", "Reference to same sheet")
 
-	- same file, other sheet
-	=HYPERLINK("#SheetName!A1", "Reference to sheet without space in name")
-	=HYPERLINK("#'Sheet Name'!A1", "Reference to sheet with space in name")
+  - same file, same sheet
+    =HYPERLINK("#A1", "Reference to same sheet")
 
-	- other local file
-	=HYPERLINK("D:\Folder\File.docx","Word file")
-	=HYPERLINK("D:\Folder\File.docx#Bookmark","Local Word file with bookmark")
-	=HYPERLINK("D:\Folder\File.xlsx#SheetName!A1","Local Excel file with reference")
-	=HYPERLINK("D:\Folder\File.xlsx#'Sheet Name'!A1","Local Excel file with reference")
+  - same file, other sheet
+    =HYPERLINK("#SheetName!A1", "Reference to sheet without space in name")
+    =HYPERLINK("#'Sheet Name'!A1", "Reference to sheet with space in name")
 
-	=HYPERLINK("[D:\Folder\File.docx]","Word file")
-	=HYPERLINK("[D:\Folder\File.docx]Bookmark","Local Word file with bookmark")
-	=HYPERLINK("[D:\Folder\File.xlsx]SheetName!A1","Local Excel file with reference")
-	=HYPERLINK("[D:\Folder\File.xlsx]'Sheet Name'!A1","Local Excel file with reference")
+  - other local file
+    =HYPERLINK("D:\Folder\File.docx","Word file")
+    =HYPERLINK("D:\Folder\File.docx#Bookmark","Local Word file with bookmark")
+    =HYPERLINK("D:\Folder\File.xlsx#SheetName!A1","Local Excel file with reference")
+    =HYPERLINK("D:\Folder\File.xlsx#'Sheet Name'!A1","Local Excel file with reference")
 
-	- other remote file
-	=HYPERLINK("\\SERVER\Folder\File.doc", "Remote Word file")
-	=HYPERLINK("\\SERVER\Folder\File.xlsx#SheetName!A1", "Remote Excel file with reference")
-	=HYPERLINK("\\SERVER\Folder\File.xlsx#'Sheet Name'!A1", "Remote Excel file with reference")
-	=HYPERLINK("[\\SERVER\Folder\File.xlsx]SheetName!A1", "Remote Excel file with reference")
-	=HYPERLINK("[\\SERVER\Folder\File.xlsx]'Sheet Name'!A1", "Remote Excel file with reference")
+    =HYPERLINK("[D:\Folder\File.docx]","Word file")
+    =HYPERLINK("[D:\Folder\File.docx]Bookmark","Local Word file with bookmark")
+    =HYPERLINK("[D:\Folder\File.xlsx]SheetName!A1","Local Excel file with reference")
+    =HYPERLINK("[D:\Folder\File.xlsx]'Sheet Name'!A1","Local Excel file with reference")
 
-	- url
-	=HYPERLINK("https://www.spam.it","Website without bookmark")
-	=HYPERLINK("https://www.spam.it/#bookmark","Website with bookmark")
-	=HYPERLINK("[https://www.spam.it/]bookmark","Website with bookmark")
+  - other remote file
+    =HYPERLINK("\\SERVER\Folder\File.doc", "Remote Word file")
+    =HYPERLINK("\\SERVER\Folder\File.xlsx#SheetName!A1", "Remote Excel file with reference")
+    =HYPERLINK("\\SERVER\Folder\File.xlsx#'Sheet Name'!A1", "Remote Excel file with reference")
+    =HYPERLINK("[\\SERVER\Folder\File.xlsx]SheetName!A1", "Remote Excel file with reference")
+    =HYPERLINK("[\\SERVER\Folder\File.xlsx]'Sheet Name'!A1", "Remote Excel file with reference")
 
-	-email
-	=HYPERLINK("mailto:spam@spam.it","Email without subject")
-	=HYPERLINK("mailto:spam@spam.it?subject=topic","Email with subject")
+  - url
+    =HYPERLINK("https://www.spam.it","Website without bookmark")
+    =HYPERLINK("https://www.spam.it/#bookmark","Website with bookmark")
+    =HYPERLINK("[https://www.spam.it/]bookmark","Website with bookmark")
+
+    -email
+    =HYPERLINK("mailto:spam@spam.it","Email without subject")
+    =HYPERLINK("mailto:spam@spam.it?subject=topic","Email with subject")
 */
 func ToTarget(target string) Option {
 	return func(i *Info) {
@@ -285,7 +288,7 @@ func ToTarget(target string) Option {
 	}
 }
 
-//private method used by hyperlinks manager to unpack Info
+// private method used by hyperlinks manager to unpack Info
 func from(info *Info) (hyperlink *ml.Hyperlink, format interface{}, err error) {
 	if err = info.Validate(); err != nil {
 		return
@@ -296,7 +299,7 @@ func from(info *Info) (hyperlink *ml.Hyperlink, format interface{}, err error) {
 	return
 }
 
-//private method used by hyperlinks manager to pack Info
+// private method used by hyperlinks manager to pack Info
 func to(link *ml.Hyperlink, target string, styleID styles.DirectStyleID) *Info {
 	//normalize location
 	location := link.Location

@@ -6,12 +6,13 @@ package hyperlink
 
 import (
 	"fmt"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/stretchr/testify/require"
 	"strings"
 	"testing"
+
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/stretchr/testify/require"
 )
 
 func TestHyperlinkOption_ToMail(t *testing.T) {

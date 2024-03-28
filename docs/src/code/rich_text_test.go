@@ -1,9 +1,8 @@
 package code
 
 import (
-	"github.com/plandem/xlsx"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/types/options/column"
+	"github.com/roboninc/xlsx"
+	"github.com/roboninc/xlsx/format/styles"
 )
 
 func Example_richText() {

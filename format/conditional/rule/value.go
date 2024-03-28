@@ -7,10 +7,12 @@ package rule
 import (
 	"errors"
 	"fmt"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
-	"github.com/plandem/xlsx/internal/number_format/convert"
+
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/number_format/convert"
+
 	//"reflect"
 	"strconv"
 	"time"
@@ -20,7 +22,7 @@ type valueRule struct {
 	baseRule
 }
 
-//Value is helper object to set specific options for rule
+// Value is helper object to set specific options for rule
 var Value valueRule
 
 func (x valueRule) initIfRequired(r *Info) {
@@ -53,7 +55,7 @@ func (x valueRule) fromBool(value bool) string {
 	return "0"
 }
 
-//nolint
+// nolint
 func (x valueRule) setValue(r *Info, values []interface{}, operator primitives.ConditionOperatorType, s *styles.Info) {
 	x.initIfRequired(r)
 	r.rule.Operator = operator

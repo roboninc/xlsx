@@ -6,13 +6,14 @@ package xlsx
 
 import (
 	"fmt"
-	"github.com/plandem/ooxml"
-	"github.com/plandem/ooxml/index"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
-	"github.com/plandem/xlsx/types/comment"
 	"strings"
+
+	"github.com/roboninc/ooxml"
+	"github.com/roboninc/ooxml/index"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
+	"github.com/roboninc/xlsx/types/comment"
 )
 
 type comments struct {
@@ -23,7 +24,7 @@ type comments struct {
 	commentIndex index.Index
 }
 
-//newComments creates an object that implements comments functionality
+// newComments creates an object that implements comments functionality
 func newComments(sheet *sheetInfo) *comments {
 	return &comments{
 		sheet: sheet,
@@ -68,7 +69,7 @@ func (c *comments) initIfRequired() {
 	}
 }
 
-//build author and comment indexes
+// build author and comment indexes
 func (c *comments) buildIndexes() {
 	for id, a := range c.ml.Authors {
 		if err := c.authorIndex.Add(a, id); err != nil {
@@ -90,7 +91,7 @@ func (c *comments) addDefaults() {
 	}
 }
 
-//Add adds a new comment info for bounds
+// Add adds a new comment info for bounds
 func (c *comments) Add(ref types.CellRef, info interface{}) error {
 	c.initIfRequired()
 
@@ -139,7 +140,7 @@ func (c *comments) Add(ref types.CellRef, info interface{}) error {
 	return c.sheet.drawingsVML.addComment(bounds, object)
 }
 
-//Remove removes comment info for bounds
+// Remove removes comment info for bounds
 func (c *comments) Remove(ref types.CellRef) {
 	c.initIfRequired()
 	c.file.MarkAsUpdated()
@@ -152,7 +153,7 @@ func (c *comments) Remove(ref types.CellRef) {
 	}
 }
 
-//Get returns a resolved comment info for provided ref or nil if there is no any comment
+// Get returns a resolved comment info for provided ref or nil if there is no any comment
 func (c *comments) Get(ref types.CellRef) *ml.StringItem {
 	c.initIfRequired()
 

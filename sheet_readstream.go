@@ -7,12 +7,12 @@ package xlsx
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/plandem/ooxml"
-	"github.com/plandem/xlsx/format/conditional"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
-	"github.com/plandem/xlsx/types/options/sheet"
 	"math"
+
+	"github.com/roboninc/ooxml"
+	"github.com/roboninc/xlsx/format/conditional"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
 )
 
 type sheetReadStream struct {
@@ -113,7 +113,7 @@ func (s *sheetReadStream) Rows() RowIterator {
 	return newRowIterator(s)
 }
 
-//Close frees allocated by sheet resources
+// Close frees allocated by sheet resources
 func (s *sheetReadStream) Close() {
 	_ = s.stream.Close()
 }
@@ -126,8 +126,8 @@ func (s *sheetReadStream) emptyDataRow(indexRef int) *ml.Row {
 	}
 }
 
-//nolint
-//afterOpen loads worksheet data and initializes it if required
+// nolint
+// afterOpen loads worksheet data and initializes it if required
 func (s *sheetReadStream) afterOpen() {
 	//adds a styles for types
 	s.workbook.doc.styleSheet.addTypedStylesIfRequired()
@@ -253,7 +253,7 @@ func (s *sheetReadStream) afterOpen() {
 	}
 }
 
-//not allowed methods for stream reading mode
+// not allowed methods for stream reading mode
 func (s *sheetReadStream) Col(index int) *Col {
 	panic(errorNotSupported)
 }

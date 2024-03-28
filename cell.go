@@ -7,18 +7,18 @@ package xlsx
 import (
 	"errors"
 	"fmt"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/number_format"
-	"github.com/plandem/xlsx/internal/number_format/convert"
-	"github.com/plandem/xlsx/types"
-	"github.com/plandem/xlsx/types/hyperlink"
 	"math"
 	"strconv"
 	"time"
+
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/number_format/convert"
+	"github.com/roboninc/xlsx/types"
+	"github.com/roboninc/xlsx/types/hyperlink"
 )
 
-//Cell is a higher level object that wraps ml.Cell with functionality
+// Cell is a higher level object that wraps ml.Cell with functionality
 type Cell struct {
 	ml    *ml.Cell
 	sheet *sheetInfo
@@ -28,12 +28,12 @@ var (
 	errTypeMismatch = errors.New("type mismatch")
 )
 
-//Type returns current type of cell
+// Type returns current type of cell
 func (c *Cell) Type() types.CellType {
 	return c.ml.Type
 }
 
-//Value returns current raw value of cell
+// Value returns current raw value of cell
 func (c *Cell) Value() string {
 	var value string
 
@@ -57,7 +57,7 @@ func (c *Cell) Value() string {
 	return value
 }
 
-//String returns formatted value as string respecting cell number format and type. Any errors ignored to conform String() interface.
+// String returns formatted value as string respecting cell number format and type. Any errors ignored to conform String() interface.
 func (c *Cell) String() string {
 	//if cell has error, then just return value that Excel put here
 	if c.ml.Type == types.CellTypeError {
@@ -70,7 +70,7 @@ func (c *Cell) String() string {
 	return number.Format(c.Value(), code, c.ml.Type)
 }
 
-//Date try to convert and return current raw value as time.Time
+// Date try to convert and return current raw value as time.Time
 func (c *Cell) Date() (time.Time, error) {
 	if c.ml.Type == types.CellTypeDate || c.ml.Type == types.CellTypeNumber || c.ml.Type == types.CellTypeGeneral {
 		return convert.ToDate(c.ml.Value)
@@ -79,7 +79,7 @@ func (c *Cell) Date() (time.Time, error) {
 	return time.Now(), errTypeMismatch
 }
 
-//Int try to convert and return current raw value as signed integer
+// Int try to convert and return current raw value as signed integer
 func (c *Cell) Int() (int, error) {
 	if c.ml.Type == types.CellTypeNumber || c.ml.Type == types.CellTypeGeneral {
 		return convert.ToInt(c.ml.Value)
@@ -88,7 +88,7 @@ func (c *Cell) Int() (int, error) {
 	return 0, errTypeMismatch
 }
 
-//Uint try to convert and return current raw value as unsigned integer
+// Uint try to convert and return current raw value as unsigned integer
 func (c *Cell) Uint() (uint, error) {
 	if c.ml.Type == types.CellTypeNumber || c.ml.Type == types.CellTypeGeneral {
 		return convert.ToUint(c.ml.Value)
@@ -97,7 +97,7 @@ func (c *Cell) Uint() (uint, error) {
 	return 0, errTypeMismatch
 }
 
-//Float try to convert and return current raw value as float64
+// Float try to convert and return current raw value as float64
 func (c *Cell) Float() (float64, error) {
 	if c.ml.Type == types.CellTypeNumber || c.ml.Type == types.CellTypeGeneral {
 		return convert.ToFloat(c.ml.Value)
@@ -106,7 +106,7 @@ func (c *Cell) Float() (float64, error) {
 	return math.NaN(), errTypeMismatch
 }
 
-//Bool try to convert and return current raw value as bool
+// Bool try to convert and return current raw value as bool
 func (c *Cell) Bool() (bool, error) {
 	if c.ml.Type == types.CellTypeBool || c.ml.Type == types.CellTypeGeneral || c.ml.Type == types.CellTypeNumber {
 		return convert.ToBool(c.ml.Value)
@@ -115,7 +115,7 @@ func (c *Cell) Bool() (bool, error) {
 	return false, errTypeMismatch
 }
 
-//setGeneral sets the value as general type
+// setGeneral sets the value as general type
 func (c *Cell) setGeneral(value string) {
 	c.ml.Type = types.CellTypeGeneral
 	c.ml.Value = value
@@ -123,7 +123,7 @@ func (c *Cell) setGeneral(value string) {
 	c.ml.InlineStr = nil
 }
 
-//SetText sets shared rich text
+// SetText sets shared rich text
 func (c *Cell) SetText(parts ...interface{}) error {
 	//we can update sharedStrings only when sheet is in write mode, to prevent pollution of sharedStrings with fake values
 	if (c.sheet.mode() & sheetModeWrite) == 0 {
@@ -146,7 +146,7 @@ func (c *Cell) SetText(parts ...interface{}) error {
 	return err
 }
 
-//SetInlineText sets inline rich text
+// SetInlineText sets inline rich text
 func (c *Cell) SetInlineText(parts ...interface{}) error {
 	text, cellStyles, err := toRichText(parts...)
 
@@ -164,7 +164,7 @@ func (c *Cell) SetInlineText(parts ...interface{}) error {
 	return err
 }
 
-//SetInt sets an signed integer value
+// SetInt sets an signed integer value
 func (c *Cell) SetInt(value int) {
 	c.ml.Type = types.CellTypeNumber
 	c.ml.Value = strconv.FormatInt(int64(value), 10)
@@ -177,7 +177,7 @@ func (c *Cell) SetInt(value int) {
 	c.ml.InlineStr = nil
 }
 
-//SetUint sets an unsigned integer value
+// SetUint sets an unsigned integer value
 func (c *Cell) SetUint(value uint) {
 	c.ml.Type = types.CellTypeNumber
 	c.ml.Value = strconv.FormatUint(uint64(value), 10)
@@ -190,7 +190,7 @@ func (c *Cell) SetUint(value uint) {
 	c.ml.InlineStr = nil
 }
 
-//SetFloat sets a float value
+// SetFloat sets a float value
 func (c *Cell) SetFloat(value float64) {
 	c.ml.Type = types.CellTypeNumber
 	c.ml.Value = strconv.FormatFloat(value, 'f', -1, 64)
@@ -203,7 +203,7 @@ func (c *Cell) SetFloat(value float64) {
 	c.ml.InlineStr = nil
 }
 
-//SetBool sets a bool value
+// SetBool sets a bool value
 func (c *Cell) SetBool(value bool) {
 	c.ml.Type = types.CellTypeBool
 	c.ml.Formula = nil
@@ -216,7 +216,7 @@ func (c *Cell) SetBool(value bool) {
 	}
 }
 
-//setDate is a general setter for date types
+// setDate is a general setter for date types
 func (c *Cell) setDate(value time.Time, t number.Type) {
 	c.ml.Type = types.CellTypeDate
 	c.ml.Value = value.Format(convert.ISO8601)
@@ -229,28 +229,28 @@ func (c *Cell) setDate(value time.Time, t number.Type) {
 	c.ml.InlineStr = nil
 }
 
-//SetDateTime sets a time value with number format for datetime
+// SetDateTime sets a time value with number format for datetime
 func (c *Cell) SetDateTime(value time.Time) {
 	c.setDate(value, number.DateTime)
 }
 
-//SetDate sets a time value with number format for date
+// SetDate sets a time value with number format for date
 func (c *Cell) SetDate(value time.Time) {
 	c.setDate(value, number.Date)
 }
 
-//SetTime sets a time value with number format for time
+// SetTime sets a time value with number format for time
 func (c *Cell) SetTime(value time.Time) {
 	c.setDate(value, number.Time)
 }
 
-//SetDeltaTime sets a time value with number format for delta time
+// SetDeltaTime sets a time value with number format for delta time
 func (c *Cell) SetDeltaTime(value time.Time) {
 	c.setDate(value, number.DeltaTime)
 }
 
-//nolint
-//SetValue sets a value
+// nolint
+// SetValue sets a value
 func (c *Cell) SetValue(value interface{}) {
 	switch v := value.(type) {
 	case int:
@@ -294,43 +294,43 @@ func (c *Cell) SetValue(value interface{}) {
 	}
 }
 
-//Reset resets current current cell information
+// Reset resets current current cell information
 func (c *Cell) Reset() {
 	*c.ml = ml.Cell{Ref: c.ml.Ref}
 }
 
-//Clear clears cell's value
+// Clear clears cell's value
 func (c *Cell) Clear() {
 	c.ml.Value = ""
 }
 
-//HasFormula returns true if cell has formula
+// HasFormula returns true if cell has formula
 func (c *Cell) HasFormula() bool {
 	return c.ml.Formula != nil && (*c.ml.Formula != ml.CellFormula{})
 }
 
-//Styles returns DirectStyleID of active format for cell
+// Styles returns DirectStyleID of active format for cell
 func (c *Cell) Styles() styles.DirectStyleID {
 	return c.ml.Style
 }
 
-//SetStyles sets style format to requested DirectStyleID or styles.Info
+// SetStyles sets style format to requested DirectStyleID or styles.Info
 func (c *Cell) SetStyles(s interface{}) {
 	c.ml.Style = c.sheet.resolveStyleID(s)
 }
 
-//SetValueWithFormat is helper function that internally works as SetValue and SetStyles with NumberFormat
+// SetValueWithFormat is helper function that internally works as SetValue and SetStyles with NumberFormat
 func (c *Cell) SetValueWithFormat(value interface{}, formatCode string) {
 	c.ml.Style = c.sheet.resolveStyleID(styles.New(styles.NumberFormat(formatCode)))
 	c.SetValue(value)
 }
 
-//Hyperlink returns resolved hyperlink.Info if there is any hyperlink or nil otherwise
+// Hyperlink returns resolved hyperlink.Info if there is any hyperlink or nil otherwise
 func (c *Cell) Hyperlink() *hyperlink.Info {
 	return c.sheet.hyperlinks.Get(c.ml.Ref)
 }
 
-//SetHyperlink sets hyperlink for cell, where link can be string or hyperlink.Info
+// SetHyperlink sets hyperlink for cell, where link can be string or hyperlink.Info
 func (c *Cell) SetHyperlink(link interface{}) error {
 	format, err := c.sheet.hyperlinks.Add(types.RefFromIndexes(c.ml.Ref.ToIndexes()).ToBounds(), link)
 	if err != nil {
@@ -341,7 +341,7 @@ func (c *Cell) SetHyperlink(link interface{}) error {
 	return nil
 }
 
-//SetValueWithHyperlink is helper function that internally works as SetValue and SetHyperlink
+// SetValueWithHyperlink is helper function that internally works as SetValue and SetHyperlink
 func (c *Cell) SetValueWithHyperlink(value interface{}, link interface{}) error {
 	err := c.SetHyperlink(link)
 
@@ -352,23 +352,23 @@ func (c *Cell) SetValueWithHyperlink(value interface{}, link interface{}) error 
 	return err
 }
 
-//RemoveHyperlink removes hyperlink from cell
+// RemoveHyperlink removes hyperlink from cell
 func (c *Cell) RemoveHyperlink() {
 	c.sheet.hyperlinks.Remove(types.RefFromIndexes(c.ml.Ref.ToIndexes()).ToBounds())
 }
 
-//SetComment sets comment for cell, where comment can be string or comment.Info
+// SetComment sets comment for cell, where comment can be string or comment.Info
 func (c *Cell) SetComment(comment interface{}) error {
 	return c.sheet.comments.Add(c.ml.Ref, comment)
 }
 
-//Comment returns text of comment if there is any comment or empty string
+// Comment returns text of comment if there is any comment or empty string
 func (c *Cell) Comment() string {
 	comment := c.sheet.comments.Get(c.ml.Ref)
 	return fromRichText(comment)
 }
 
-//RemoveComment removes comment from cell
+// RemoveComment removes comment from cell
 func (c *Cell) RemoveComment() {
 	c.sheet.comments.Remove(c.ml.Ref)
 }

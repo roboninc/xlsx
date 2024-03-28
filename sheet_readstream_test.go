@@ -5,13 +5,13 @@
 package xlsx_test
 
 import (
-	"github.com/plandem/xlsx"
-	"github.com/plandem/xlsx/types/options/sheet"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx"
+	"github.com/stretchr/testify/require"
 )
 
-//load content using multi phases or normal mode - must be same for both
+// load content using multi phases or normal mode - must be same for both
 func testSheetReadFull(t *testing.T, sheet xlsx.Sheet) {
 	cols, rows := sheet.Dimension()
 	require.Equal(t, 14, cols)
@@ -54,7 +54,7 @@ func testSheetReadFull(t *testing.T, sheet xlsx.Sheet) {
 	}
 }
 
-//load content using single phase only - it will be without merged cells info - only first cell from range will be output
+// load content using single phase only - it will be without merged cells info - only first cell from range will be output
 func testSheetReadLimited(t *testing.T, sheet xlsx.Sheet) {
 	cols, rows := sheet.Dimension()
 	require.Equal(t, 14, cols)

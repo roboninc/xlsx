@@ -6,14 +6,15 @@ package ml
 
 import (
 	"encoding/xml"
-	"github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+
+	"github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//GUID is a direct mapping of XSD ST_Guid
+// GUID is a direct mapping of XSD ST_Guid
 type GUID string
 
-//Comments is a direct mapping of XSD CT_Comments
+// Comments is a direct mapping of XSD CT_Comments
 type Comments struct {
 	XMLName     xml.Name          `xml:"http://schemas.openxmlformats.org/spreadsheetml/2006/main comments"`
 	Authors     []primitives.Text `xml:"authors>author"`
@@ -21,7 +22,7 @@ type Comments struct {
 	ExtLst      *ml.Reserved      `xml:"extLst,omitempty"`
 }
 
-//Comment is a direct mapping of XSD CT_Comment
+// Comment is a direct mapping of XSD CT_Comment
 type Comment struct {
 	Text     *StringItem       `xml:"text"`
 	Options  *CommentOptions   `xml:"commentPr,omitempty"`
@@ -31,7 +32,7 @@ type Comment struct {
 	ShapeID  ml.OptionalIndex  `xml:"shapeId,attr,omitempty"`
 }
 
-//CommentOptions is a direct mapping of CT_CommentPr
+// CommentOptions is a direct mapping of CT_CommentPr
 type CommentOptions struct {
 	Anchor      *ml.Reserved `xml:"anchor"`
 	Locked      *bool        `xml:"locked,attr,omitempty"`
@@ -48,7 +49,7 @@ type CommentOptions struct {
 	LockText    *bool        `xml:"lockText,attr,omitempty"`
 }
 
-//ClientData is direct mapping for CT_ClientData, that used for Excel specific settings of Shape
+// ClientData is direct mapping for CT_ClientData, that used for Excel specific settings of Shape
 type ClientData struct {
 	XMLName       xml.Name `xml:"x:ClientData"`
 	MoveWithCells bool     `xml:"x:MoveWithCells,omitempty"`

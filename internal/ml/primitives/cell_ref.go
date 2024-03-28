@@ -6,16 +6,17 @@ package primitives
 
 import (
 	"fmt"
-	"github.com/plandem/ooxml"
 	"math"
 	"strconv"
 	"strings"
+
+	"github.com/roboninc/ooxml"
 )
 
-//CellRef is a type to encode XSD ST_CellRef, an A1 style reference to the location of this cell
+// CellRef is a type to encode XSD ST_CellRef, an A1 style reference to the location of this cell
 type CellRef string
 
-//ToIndexes returns 0-based indexes of reference
+// ToIndexes returns 0-based indexes of reference
 func (cr CellRef) ToIndexes() (int, int) {
 	colPart := strings.Map(ooxml.GetLettersFn, string(cr))
 	rowPart := strings.Map(ooxml.GetNumbersFn, string(cr))
@@ -33,7 +34,7 @@ func (cr CellRef) ToIndexes() (int, int) {
 	return colIndex, rowIndex
 }
 
-//CellRefFromIndexes returns a CellRef for 0-based indexes
+// CellRefFromIndexes returns a CellRef for 0-based indexes
 func CellRefFromIndexes(colIndex, rowIndex int) CellRef {
 	if colIndex < 0 || rowIndex < 0 {
 		return ""

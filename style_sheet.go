@@ -5,21 +5,20 @@
 package xlsx
 
 import (
-	"github.com/plandem/ooxml"
-	"github.com/plandem/ooxml/index"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/number_format"
+	"github.com/roboninc/ooxml"
+	"github.com/roboninc/ooxml/index"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
 
 	// to link unexported
 	_ "unsafe"
 )
 
-//go:linkname fromStyleFormat github.com/plandem/xlsx/format/styles.from
+//go:linkname fromStyleFormat github.com/roboninc/xlsx/format/styles.from
 func fromStyleFormat(f *styles.Info) (font *ml.Font, fill *ml.Fill, alignment *ml.CellAlignment, numFormat *ml.NumberFormat, protection *ml.CellProtection, border *ml.Border, namedInfo *ml.NamedStyleInfo)
 
-//styleSheet is a higher level object that wraps ml.StyleSheet with functionality
+// styleSheet is a higher level object that wraps ml.StyleSheet with functionality
 type styleSheet struct {
 	ml ml.StyleSheet
 
@@ -60,7 +59,7 @@ func newStyleSheet(f interface{}, doc *Spreadsheet) *styleSheet {
 	return ss
 }
 
-//adds a default items for new created xlsx
+// adds a default items for new created xlsx
 func (ss *styleSheet) addDefaults() {
 	//TODO: research more about default items for a new XLSX
 	//..
@@ -130,7 +129,7 @@ func (ss *styleSheet) addDefaults() {
 	*/
 }
 
-//build indexes for all indexes
+// build indexes for all indexes
 func (ss *styleSheet) buildIndexes() {
 	//build indexes for fonts
 	for id, f := range ss.ml.Fonts.Items {
@@ -169,7 +168,7 @@ func (ss *styleSheet) buildIndexes() {
 	}
 }
 
-//adds a number formats for each type of number format if required. These styles will be used by cell's typed SetXXX methods
+// adds a number formats for each type of number format if required. These styles will be used by cell's typed SetXXX methods
 func (ss *styleSheet) addTypedStylesIfRequired() {
 	if len(ss.typedStyles) == 0 {
 		for _, t := range []number.Type{
@@ -189,7 +188,7 @@ func (ss *styleSheet) addTypedStylesIfRequired() {
 	}
 }
 
-//resolveNumberFormat returns resolved NumberFormat code for styleID
+// resolveNumberFormat returns resolved NumberFormat code for styleID
 func (ss *styleSheet) resolveNumberFormat(id ml.DirectStyleID) string {
 	style := ss.ml.CellXfs.Items[id]
 
@@ -210,7 +209,7 @@ func (ss *styleSheet) resolveNumberFormat(id ml.DirectStyleID) string {
 	return code
 }
 
-//resolveDirectStyle returns resolved Info for DirectStyleID
+// resolveDirectStyle returns resolved Info for DirectStyleID
 func (ss *styleSheet) resolveDirectStyle(id ml.DirectStyleID) *styles.Info {
 	if id == 0 {
 		return nil
@@ -226,7 +225,7 @@ func (ss *styleSheet) resolveDirectStyle(id ml.DirectStyleID) *styles.Info {
 	//return style
 }
 
-//adds a differential style
+// adds a differential style
 func (ss *styleSheet) addDiffStyle(f *styles.Info) styles.DiffStyleID {
 	ss.file.LoadIfRequired(ss.buildIndexes)
 
@@ -255,7 +254,7 @@ func (ss *styleSheet) addDiffStyle(f *styles.Info) styles.DiffStyleID {
 	return nextID
 }
 
-//add a named style if required
+// add a named style if required
 func (ss *styleSheet) addNamedStyleIfRequired(namedInfo *ml.NamedStyleInfo, style ml.Style) ml.NamedStyleID {
 	if namedInfo == nil {
 		return 0
@@ -284,7 +283,7 @@ func (ss *styleSheet) addNamedStyleIfRequired(namedInfo *ml.NamedStyleInfo, styl
 	return namedInfo.XfId
 }
 
-//adds a style. Style can be Direct or Named. Depends on settings.
+// adds a style. Style can be Direct or Named. Depends on settings.
 func (ss *styleSheet) addStyle(f *styles.Info) styles.DirectStyleID {
 	ss.file.LoadIfRequired(ss.buildIndexes)
 
@@ -339,7 +338,7 @@ func (ss *styleSheet) addStyle(f *styles.Info) styles.DirectStyleID {
 	return nextID
 }
 
-//adds a new font if required
+// adds a new font if required
 func (ss *styleSheet) addFontIfRequired(font *ml.Font) int {
 	//if there is no information, then use default
 	if font == nil {
@@ -359,7 +358,7 @@ func (ss *styleSheet) addFontIfRequired(font *ml.Font) int {
 	return nextID
 }
 
-//adds a new fill if required
+// adds a new fill if required
 func (ss *styleSheet) addFillIfRequired(fill *ml.Fill) int {
 	//if there is no information, then use default
 	if fill == nil {
@@ -379,7 +378,7 @@ func (ss *styleSheet) addFillIfRequired(fill *ml.Fill) int {
 	return nextID
 }
 
-//adds a new border if required
+// adds a new border if required
 func (ss *styleSheet) addBorderIfRequired(border *ml.Border) int {
 	//if there is no information, then use default
 	if border == nil {
@@ -399,7 +398,7 @@ func (ss *styleSheet) addBorderIfRequired(border *ml.Border) int {
 	return nextID
 }
 
-//adds a new number format if required
+// adds a new number format if required
 func (ss *styleSheet) addNumFormatIfRequired(n *ml.NumberFormat) int {
 	//if there is no information, then use default
 	if n == nil {

@@ -5,9 +5,10 @@
 package options
 
 import (
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/stretchr/testify/require"
 )
 
 func TestRowOptions(t *testing.T) {

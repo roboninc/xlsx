@@ -6,11 +6,12 @@ package xlsx_test
 
 import (
 	"bytes"
-	"github.com/plandem/xlsx"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"os"
 	"testing"
+
+	"github.com/roboninc/xlsx"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNew(t *testing.T) {

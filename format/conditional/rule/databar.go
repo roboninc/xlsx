@@ -6,16 +6,17 @@ package rule
 
 import (
 	"fmt"
-	"github.com/plandem/xlsx/internal/color"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+
+	"github.com/roboninc/xlsx/internal/color"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type dataBarRule struct {
 	baseRule
 }
 
-//DataBar is helper object to set specific options for rule
+// DataBar is helper object to set specific options for rule
 var DataBar dataBarRule
 
 func (x dataBarRule) initIfRequired(r *Info) {

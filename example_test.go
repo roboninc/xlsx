@@ -6,15 +6,16 @@ package xlsx_test
 
 import (
 	"fmt"
-	"github.com/plandem/xlsx"
-	"github.com/plandem/xlsx/format/styles"
-	colOptions "github.com/plandem/xlsx/types/options/column"
-	rowOptions "github.com/plandem/xlsx/types/options/row"
-	sheetOptions "github.com/plandem/xlsx/types/options/sheet"
 	"log"
 	"os"
 	"strings"
 	"time"
+
+	"github.com/roboninc/xlsx"
+	"github.com/roboninc/xlsx/format/styles"
+	colOptions "github.com/roboninc/xlsx/types/options/column"
+	rowOptions "github.com/roboninc/xlsx/types/options/row"
+	sheetOptions "github.com/roboninc/xlsx/types/options/sheet"
 )
 
 // Demonstrates how to create/open/save XLSX files

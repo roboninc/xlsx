@@ -5,24 +5,25 @@
 package xlsx
 
 import (
-	"github.com/plandem/xlsx/format/conditional"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
 	"strings"
+
+	"github.com/roboninc/xlsx/format/conditional"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
 
 	// to link unexported
 	_ "unsafe"
 )
 
-//go:linkname fromConditionalFormat github.com/plandem/xlsx/format/conditional.from
+//go:linkname fromConditionalFormat github.com/roboninc/xlsx/format/conditional.from
 func fromConditionalFormat(f *conditional.Info) (*ml.ConditionalFormatting, []*styles.Info)
 
 type conditionals struct {
 	sheet *sheetInfo
 }
 
-//newConditionals creates an object that implements conditional formatting functionality
+// newConditionals creates an object that implements conditional formatting functionality
 func newConditionals(sheet *sheetInfo) *conditionals {
 	return &conditionals{sheet: sheet}
 }
@@ -35,7 +36,7 @@ func (c *conditionals) initIfRequired() {
 	}
 }
 
-//Add adds a conditional formatting with attaching additional refs if required
+// Add adds a conditional formatting with attaching additional refs if required
 func (c *conditionals) Add(ci *conditional.Info, refs []types.Ref) error {
 	c.initIfRequired()
 
@@ -87,12 +88,12 @@ func (c *conditionals) Add(ci *conditional.Info, refs []types.Ref) error {
 	return nil
 }
 
-//Remove deletes a conditional formatting from refs
+// Remove deletes a conditional formatting from refs
 func (c *conditionals) Remove(refs []types.Ref) {
 	panic(errorNotSupported)
 }
 
-//Resolve checks if requested cIdx and rIdx related to any conditionals formatting and returns it
+// Resolve checks if requested cIdx and rIdx related to any conditionals formatting and returns it
 func (c *conditionals) Resolve(cIdx, rIdx int) *conditional.Info {
 	//TODO: Populate format.Info with required information
 	panic(errorNotSupported)

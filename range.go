@@ -5,18 +5,18 @@
 package xlsx
 
 import (
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/types"
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/types"
 )
 
-//Range is a object that provides some functionality for cells inside of range. E.g.: A1:D12
+// Range is a object that provides some functionality for cells inside of range. E.g.: A1:D12
 type Range struct {
 	//we don't want to pollute Range with bound's public properties
 	bounds types.Bounds
 	sheet  Sheet
 }
 
-//newRangeFromRef create and returns Range for requested ref
+// newRangeFromRef create and returns Range for requested ref
 func newRangeFromRef(sheet Sheet, ref types.Ref) *Range {
 	return &Range{
 		ref.ToBounds(),
@@ -24,7 +24,7 @@ func newRangeFromRef(sheet Sheet, ref types.Ref) *Range {
 	}
 }
 
-//newRange create and returns Range for requested 0-based indexes
+// newRange create and returns Range for requested 0-based indexes
 func newRange(sheet Sheet, fromCol, toCol, fromRow, toRow int) *Range {
 	return &Range{
 		types.BoundsFromIndexes(fromCol, fromRow, toCol, toRow),
@@ -32,27 +32,27 @@ func newRange(sheet Sheet, fromCol, toCol, fromRow, toRow int) *Range {
 	}
 }
 
-//Bounds returns bounds of range
+// Bounds returns bounds of range
 func (r *Range) Bounds() types.Bounds {
 	return r.bounds
 }
 
-//Reset resets each cell data into zero state
+// Reset resets each cell data into zero state
 func (r *Range) Reset() {
 	r.Walk(func(idx, cIdx, rIdx int, c *Cell) { c.Reset() })
 }
 
-//Clear clears each cell value in range
+// Clear clears each cell value in range
 func (r *Range) Clear() {
 	r.Walk(func(idx, cIdx, rIdx int, c *Cell) { c.Clear() })
 }
 
-//Cells returns iterator for all cells in range
+// Cells returns iterator for all cells in range
 func (r *Range) Cells() RangeIterator {
 	return newRangeIterator(r)
 }
 
-//Values returns values for all cells in range
+// Values returns values for all cells in range
 func (r *Range) Values() []string {
 	width, height := r.bounds.Dimension()
 	values := make([]string, 0, width*height)
@@ -64,7 +64,7 @@ func (r *Range) Values() []string {
 	return values
 }
 
-//Walk calls callback cb for each Cell in range
+// Walk calls callback cb for each Cell in range
 func (r *Range) Walk(cb func(idx, cIdx, rIdx int, c *Cell)) {
 	for idx, cells := 0, r.Cells(); cells.HasNext(); idx++ {
 		iCol, iRow, cell := cells.Next()
@@ -72,7 +72,7 @@ func (r *Range) Walk(cb func(idx, cIdx, rIdx int, c *Cell)) {
 	}
 }
 
-//SetStyles sets style format to all cells in range
+// SetStyles sets style format to all cells in range
 func (r *Range) SetStyles(styleID styles.DirectStyleID) {
 	r.Walk(func(idx, cIdx, rIdx int, c *Cell) {
 		c.SetStyles(styleID)
@@ -86,15 +86,15 @@ func (r *Range) ensureNotStream() {
 	}
 }
 
-//CopyToRef copies range cells into another range starting with ref.
-//N.B.: Merged cells are not supported
+// CopyToRef copies range cells into another range starting with ref.
+// N.B.: Merged cells are not supported
 func (r *Range) CopyToRef(ref types.Ref) {
 	target := ref.ToBounds()
 	r.CopyTo(target.ToCol, target.ToRow)
 }
 
-//CopyTo copies range cells into another range starting indexes cIdx and rIdx
-//N.B.: Merged cells are not supported
+// CopyTo copies range cells into another range starting indexes cIdx and rIdx
+// N.B.: Merged cells are not supported
 func (r *Range) CopyTo(cIdx, rIdx int) {
 	//stream is not supported for copying cell's info
 	r.ensureNotStream()
@@ -122,7 +122,7 @@ func (r *Range) CopyTo(cIdx, rIdx int) {
 	}
 }
 
-//Merge merges range
+// Merge merges range
 func (r *Range) Merge() error {
 	//stream is not supported for copying cell's info
 	r.ensureNotStream()
@@ -152,12 +152,12 @@ func (r *Range) Merge() error {
 	return nil
 }
 
-//Split splits cells in range
+// Split splits cells in range
 func (r *Range) Split() {
 	r.sheet.info().mergedCells.Remove(r.bounds)
 }
 
-//SetHyperlink sets hyperlink for range, where link can be string or HyperlinkInfo
+// SetHyperlink sets hyperlink for range, where link can be string or HyperlinkInfo
 func (r *Range) SetHyperlink(link interface{}) error {
 	styleID, err := r.sheet.info().hyperlinks.Add(r.bounds, link)
 	if err != nil {
@@ -170,7 +170,7 @@ func (r *Range) SetHyperlink(link interface{}) error {
 	return nil
 }
 
-//RemoveHyperlink removes hyperlink from cell
+// RemoveHyperlink removes hyperlink from cell
 func (r *Range) RemoveHyperlink() {
 	r.Walk(func(idx, cIdx, rIdx int, c *Cell) {
 		r.sheet.info().hyperlinks.Remove(r.bounds)

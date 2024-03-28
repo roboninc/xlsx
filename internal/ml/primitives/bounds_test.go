@@ -6,9 +6,10 @@ package primitives_test
 
 import (
 	"encoding/xml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx/internal/ml/primitives"
+	"github.com/stretchr/testify/require"
 )
 
 func TestBounds(t *testing.T) {

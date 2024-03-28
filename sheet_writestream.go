@@ -2,11 +2,11 @@ package xlsx
 
 import (
 	"encoding/xml"
-	"github.com/plandem/ooxml"
-	"github.com/plandem/xlsx/format/conditional"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
-	"github.com/plandem/xlsx/types/options/sheet"
+
+	"github.com/roboninc/ooxml"
+	"github.com/roboninc/xlsx/format/conditional"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
 )
 
 type sheetWriteStream struct {
@@ -19,7 +19,7 @@ type sheetWriteStream struct {
 
 var _ Sheet = (*sheetWriteStream)(nil)
 
-//expandIfRequired expands grid to required dimension
+// expandIfRequired expands grid to required dimension
 func (s *sheetWriteStream) expandIfRequired(colIndex, rowIndex int) {
 	curWidth, curHeight := s.Dimension()
 	nextWidth, nextHeight := colIndex+1, rowIndex+1
@@ -125,7 +125,7 @@ func (s *sheetWriteStream) Row(index int) *Row {
 	}
 }
 
-//afterCreate initializes a new sheet
+// afterCreate initializes a new sheet
 func (s *sheetWriteStream) afterCreate(name string) {
 	//register file
 	s.sheetInfo.afterCreate(name)
@@ -173,7 +173,7 @@ func (s *sheetWriteStream) Rows() RowIterator {
 	panic(errorNotSupported)
 }
 
-//not allowed methods for stream reading mode
+// not allowed methods for stream reading mode
 func (s *sheetWriteStream) Col(index int) *Col {
 	panic(errorNotSupported)
 }

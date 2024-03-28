@@ -5,15 +5,15 @@
 package types
 
 import (
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//CellType is alias of original primitives.CellType type to:
+// CellType is alias of original primitives.CellType type to:
 // 1) make it public
 // 2) forbid usage of integers directly
 type CellType = primitives.CellType
 
-//List of all possible values for CellType
+// List of all possible values for CellType
 const (
 	CellTypeGeneral CellType = iota
 	CellTypeBool

@@ -6,11 +6,12 @@ package ml
 
 import (
 	"encoding/xml"
-	"github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
+
+	"github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//SharedStrings is a direct mapping of XSD CT_Sst
+// SharedStrings is a direct mapping of XSD CT_Sst
 type SharedStrings struct {
 	XMLName     xml.Name      `xml:"http://schemas.openxmlformats.org/spreadsheetml/2006/main sst"`
 	Count       uint          `xml:"count,attr,omitempty"`
@@ -19,7 +20,7 @@ type SharedStrings struct {
 	ExtLst      *ml.Reserved  `xml:"extLst,omitempty"`
 }
 
-//StringItem is a direct mapping of XSD CT_Rst
+// StringItem is a direct mapping of XSD CT_Rst
 type StringItem struct {
 	Text       primitives.Text `xml:"t,omitempty"`   //optional
 	RichText   []*RichText     `xml:"r,omitempty"`   //optional
@@ -27,14 +28,14 @@ type StringItem struct {
 	PhoneticPr *ml.Reserved    `xml:"phoneticPr,omitempty"`
 }
 
-//RichText is a direct mapping of XSD CT_RElt
+// RichText is a direct mapping of XSD CT_RElt
 type RichText struct {
 	Font *RichFont       `xml:"rPr,omitempty"`
 	Text primitives.Text `xml:"t"` //required
 }
 
-//RichFont is a direct mapping of XSD CT_RPrElt
-//N.B.: it's weird, but CT_RPrElt is clone CT_Font, except different tag for 'Name' field
+// RichFont is a direct mapping of XSD CT_RPrElt
+// N.B.: it's weird, but CT_RPrElt is clone CT_Font, except different tag for 'Name' field
 type RichFont struct {
 	Name      ml.Property                `xml:"rFont,omitempty"`
 	Charset   primitives.FontCharsetType `xml:"charset,omitempty"`

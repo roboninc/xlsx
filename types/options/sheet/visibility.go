@@ -5,10 +5,10 @@
 package options
 
 import (
-	"github.com/plandem/xlsx/internal/ml/primitives"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
-//List of all possible values for VisibilityType
+// List of all possible values for VisibilityType
 const (
 	_ primitives.VisibilityType = iota
 	VisibilityVisible

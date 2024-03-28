@@ -5,9 +5,10 @@
 package styles
 
 import (
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/stretchr/testify/require"
 )
 
 func TestNumberFormat(t *testing.T) {

@@ -5,16 +5,16 @@
 package xlsx
 
 import (
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
 )
 
-//TODO: add support for custom filters and sorting
+// TODO: add support for custom filters and sorting
 type filters struct {
 	sheet *sheetInfo
 }
 
-//newFilters creates an object that implements filters functionality
+// newFilters creates an object that implements filters functionality
 func newFilters(sheet *sheetInfo) *filters {
 	return &filters{sheet: sheet}
 }
@@ -27,7 +27,7 @@ func (f *filters) initIfRequired() {
 	}
 }
 
-//AddAuto adds auto filter for range
+// AddAuto adds auto filter for range
 func (f *filters) AddAuto(ref types.Ref, settings []interface{}) {
 	b := ref.ToBounds()
 
@@ -44,7 +44,7 @@ func (f *filters) AddAuto(ref types.Ref, settings []interface{}) {
 	f.sheet.ml.AutoFilter.Bounds = b
 }
 
-//Add adds a new custom filter info for column with 0-based colIndex
+// Add adds a new custom filter info for column with 0-based colIndex
 func (f *filters) Add(colIndex int, settings []interface{}) error {
 	f.initIfRequired()
 	b := f.sheet.ml.AutoFilter.Bounds
@@ -65,7 +65,7 @@ func (f *filters) Add(colIndex int, settings []interface{}) error {
 	return nil
 }
 
-//Remove removes filter info for column with 0-based colIndex
+// Remove removes filter info for column with 0-based colIndex
 func (f *filters) Remove(colIndex int) {
 	f.initIfRequired()
 	b := f.sheet.ml.AutoFilter.Bounds

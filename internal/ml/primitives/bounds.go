@@ -6,10 +6,11 @@ package primitives
 
 import (
 	"encoding/xml"
-	"github.com/plandem/ooxml/index"
+
+	"github.com/roboninc/ooxml/index"
 )
 
-//Bounds is implementation of Ref
+// Bounds is implementation of Ref
 type Bounds struct {
 	FromCol     int
 	FromRow     int
@@ -18,7 +19,7 @@ type Bounds struct {
 	initialized bool
 }
 
-//BoundsFromIndexes returns a Bounds information for provided 0-based indexes
+// BoundsFromIndexes returns a Bounds information for provided 0-based indexes
 func BoundsFromIndexes(fromCol, fromRow, toCol, toRow int) Bounds {
 	//rebound cols if required
 	if fromCol > toCol {
@@ -39,22 +40,22 @@ func BoundsFromIndexes(fromCol, fromRow, toCol, toRow int) Bounds {
 	}
 }
 
-//ContainsRef checks if celRef is inside of bounds
+// ContainsRef checks if celRef is inside of bounds
 func (b *Bounds) ContainsRef(celRef CellRef) bool {
 	return b.Contains(celRef.ToIndexes())
 }
 
-//Contains checks if indexes cIdx and rIdx are inside of bounds
+// Contains checks if indexes cIdx and rIdx are inside of bounds
 func (b *Bounds) Contains(cIdx, rIdx int) bool {
 	return (cIdx >= b.FromCol && cIdx <= b.ToCol) && (rIdx >= b.FromRow && rIdx <= b.ToRow)
 }
 
-//Overlaps checks if bounds intersects with another bounds
+// Overlaps checks if bounds intersects with another bounds
 func (b *Bounds) Overlaps(a Bounds) bool {
 	return (a.ToCol >= b.FromCol) && (a.FromCol <= b.ToCol) && (a.ToRow >= b.FromRow) && (a.FromRow <= b.ToRow)
 }
 
-//Equals checks if bounds is same as other bounds
+// Equals checks if bounds is same as other bounds
 func (b *Bounds) Equals(a Bounds) bool {
 	//supposed that 'a' already rebounded if required
 	return a.FromCol == b.FromCol &&
@@ -63,19 +64,19 @@ func (b *Bounds) Equals(a Bounds) bool {
 		a.ToRow == b.ToRow
 }
 
-//Dimension returns total number of cols and rows in bounds
+// Dimension returns total number of cols and rows in bounds
 func (b *Bounds) Dimension() (width int, height int) {
 	width = b.ToCol - b.FromCol + 1
 	height = b.ToRow - b.FromRow + 1
 	return
 }
 
-//ToRef returns reference of bounds. Alias of String() method
+// ToRef returns reference of bounds. Alias of String() method
 func (b *Bounds) ToRef() Ref {
 	return Ref(b.String())
 }
 
-//String return textual version of bounds
+// String return textual version of bounds
 func (b Bounds) String() string {
 	return string(RefFromCellRefs(
 		CellRefFromIndexes(b.FromCol, b.FromRow),
@@ -83,17 +84,17 @@ func (b Bounds) String() string {
 	)
 }
 
-//IsEmpty return true if type was not initialized
+// IsEmpty return true if type was not initialized
 func (b Bounds) IsEmpty() bool {
 	return b == Bounds{}
 }
 
-//Hash builds hash code for all required values of Bounds to use as unique index
+// Hash builds hash code for all required values of Bounds to use as unique index
 func (b Bounds) Hash() index.Code {
 	return index.Hash(b.String())
 }
 
-//MarshalXMLAttr marshal Bounds
+// MarshalXMLAttr marshal Bounds
 func (b Bounds) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	attr := xml.Attr{Name: name}
 
@@ -106,7 +107,7 @@ func (b Bounds) MarshalXMLAttr(name xml.Name) (xml.Attr, error) {
 	return attr, nil
 }
 
-//UnmarshalXMLAttr unmarshal Bounds
+// UnmarshalXMLAttr unmarshal Bounds
 func (b *Bounds) UnmarshalXMLAttr(attr xml.Attr) error {
 	*b = Ref(attr.Value).ToBounds()
 	return nil

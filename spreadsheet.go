@@ -8,12 +8,13 @@ import (
 	"archive/zip"
 	"errors"
 	"fmt"
-	"github.com/plandem/ooxml"
-	"github.com/plandem/xlsx/format/styles"
 	"regexp"
+
+	"github.com/roboninc/ooxml"
+	"github.com/roboninc/xlsx/format/styles"
 )
 
-//Spreadsheet is a higher level object that wraps OOXML package with XLSX functionality
+// Spreadsheet is a higher level object that wraps OOXML package with XLSX functionality
 type Spreadsheet struct {
 	ooxml.Package
 	pkg           *ooxml.PackageInfo
@@ -24,7 +25,7 @@ type Spreadsheet struct {
 	styleSheet    *styleSheet
 }
 
-//newSpreadsheet creates an object that implements XLSX functionality
+// newSpreadsheet creates an object that implements XLSX functionality
 func newSpreadsheet(pkg *ooxml.PackageInfo) (interface{}, error) {
 	xlDoc := &Spreadsheet{
 		pkg:     pkg,
@@ -42,7 +43,7 @@ func newSpreadsheet(pkg *ooxml.PackageInfo) (interface{}, error) {
 	return xlDoc, nil
 }
 
-//SheetNames returns a names of all sheets
+// SheetNames returns a names of all sheets
 func (xl *Spreadsheet) SheetNames() []string {
 	sheetNames := make([]string, len(xl.sheets))
 
@@ -53,7 +54,7 @@ func (xl *Spreadsheet) SheetNames() []string {
 	return sheetNames
 }
 
-//SheetByName returns a sheet by name with required open mode options
+// SheetByName returns a sheet by name with required open mode options
 func (xl *Spreadsheet) SheetByName(name string, options ...SheetMode) Sheet {
 	for id := range xl.sheets {
 		if name == xl.workbook.ml.Sheets[id].Name {
@@ -64,7 +65,7 @@ func (xl *Spreadsheet) SheetByName(name string, options ...SheetMode) Sheet {
 	return nil
 }
 
-//Sheet returns a sheet by 0-based index with required open mode options
+// Sheet returns a sheet by 0-based index with required open mode options
 func (xl *Spreadsheet) Sheet(i int, options ...SheetMode) Sheet {
 	if i >= len(xl.sheets) {
 		return nil
@@ -107,7 +108,7 @@ func (xl *Spreadsheet) Sheet(i int, options ...SheetMode) Sheet {
 	return sheet
 }
 
-//AddSheet adds a new sheet with name to document
+// AddSheet adds a new sheet with name to document
 func (xl *Spreadsheet) AddSheet(name string, options ...SheetMode) Sheet {
 	mode := sheetModeWrite
 	for _, m := range options {
@@ -133,12 +134,12 @@ func (xl *Spreadsheet) AddSheet(name string, options ...SheetMode) Sheet {
 	return nil
 }
 
-//Sheets returns iterator for all sheets of Spreadsheet
+// Sheets returns iterator for all sheets of Spreadsheet
 func (xl *Spreadsheet) Sheets() SheetIterator {
 	return newSheetIterator(xl)
 }
 
-//DeleteSheet deletes the sheet with required 0-based index
+// DeleteSheet deletes the sheet with required 0-based index
 func (xl *Spreadsheet) DeleteSheet(i int) {
 	if i < len(xl.sheets) {
 		sheet := xl.sheets[i]
@@ -161,17 +162,17 @@ func (xl *Spreadsheet) DeleteSheet(i int) {
 	}
 }
 
-//AddStyles adds a new style formatting to document and return related ID that can be used lately
+// AddStyles adds a new style formatting to document and return related ID that can be used lately
 func (xl *Spreadsheet) AddStyles(style *styles.Info) styles.DirectStyleID {
 	return xl.styleSheet.addStyle(style)
 }
 
-//ResolveStyles returns style formatting for styleID or nil if there is no any styles with such styleID
+// ResolveStyles returns style formatting for styleID or nil if there is no any styles with such styleID
 func (xl *Spreadsheet) ResolveStyles(styleID styles.DirectStyleID) *styles.Info {
 	return xl.workbook.doc.styleSheet.resolveDirectStyle(styleID)
 }
 
-//IsValid validates document and return error if there is any error. Using right before saving.
+// IsValid validates document and return error if there is any error. Using right before saving.
 func (xl *Spreadsheet) IsValid() error {
 	if len(xl.sheets) == 0 {
 		return errors.New("spreadsheet requires at least one worksheet")
@@ -180,7 +181,7 @@ func (xl *Spreadsheet) IsValid() error {
 	return nil
 }
 
-//readSpreadsheet reads required information from XLSX
+// readSpreadsheet reads required information from XLSX
 func (xl *Spreadsheet) readSpreadsheet() {
 	files := xl.pkg.Files(nil)
 	for _, file := range files {
@@ -209,7 +210,7 @@ func (xl *Spreadsheet) readSpreadsheet() {
 	}
 }
 
-//createSpreadsheet initialize a new XLSX document
+// createSpreadsheet initialize a new XLSX document
 func (xl *Spreadsheet) createSpreadsheet() {
 	xl.relationships = ooxml.NewRelationships("xl/_rels/workbook.xml.rels", xl.pkg)
 	xl.workbook = newWorkbook("xl/workbook.xml", xl)

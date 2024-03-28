@@ -5,9 +5,10 @@
 package xlsx_test
 
 import (
-	"github.com/plandem/xlsx"
-	"github.com/stretchr/testify/require"
 	"testing"
+
+	"github.com/roboninc/xlsx"
+	"github.com/stretchr/testify/require"
 )
 
 func TestSheetReadWrite_InsertCol(t *testing.T) {

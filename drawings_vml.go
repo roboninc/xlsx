@@ -7,19 +7,20 @@ package xlsx
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/plandem/ooxml"
-	"github.com/plandem/ooxml/drawing/vml"
-	"github.com/plandem/ooxml/drawing/vml/css"
-	"github.com/plandem/ooxml/index"
-	sharedML "github.com/plandem/ooxml/ml"
-	"github.com/plandem/xlsx/internal"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/types"
-	"github.com/plandem/xlsx/types/comment"
 	"math"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/roboninc/ooxml"
+	"github.com/roboninc/ooxml/drawing/vml"
+	"github.com/roboninc/ooxml/drawing/vml/css"
+	"github.com/roboninc/ooxml/index"
+	sharedML "github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/internal"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/types"
+	"github.com/roboninc/xlsx/types/comment"
 )
 
 type drawingsVML struct {
@@ -35,10 +36,10 @@ type drawingsVML struct {
 	shapeIndex          index.Index
 }
 
-//capacity of chunk. vml file store shapes in chunks
+// capacity of chunk. vml file store shapes in chunks
 const vmlChunkSize = 1024
 
-//office's internal id of vml shape type for comments
+// office's internal id of vml shape type for comments
 const commentShapeTypeSpt = 202
 
 var (
@@ -53,7 +54,7 @@ func newDrawingsVML(sheet *sheetInfo) *drawingsVML {
 	}
 }
 
-//resolve chunks info of this VML drawings file
+// resolve chunks info of this VML drawings file
 func (d *drawingsVML) resolveChunks() {
 	if len(d.chunks) == 0 {
 		d.attachFileIfRequired()
@@ -213,7 +214,7 @@ func (d *drawingsVML) addComment(bounds types.Bounds, info *comment.Info) error 
 	return nil
 }
 
-//Remove removes comment info for bounds
+// Remove removes comment info for bounds
 func (d *drawingsVML) removeComment(bounds types.Bounds) {
 	d.initCommentsIfRequired()
 
@@ -232,7 +233,7 @@ func (d *drawingsVML) removeComment(bounds types.Bounds) {
 	}
 }
 
-//load all content if required or add minimal required
+// load all content if required or add minimal required
 func (d *drawingsVML) initIfRequired() {
 	if d.initializedFile {
 		return
@@ -281,7 +282,7 @@ func (d *drawingsVML) initIfRequired() {
 	d.buildIndexes()
 }
 
-//attach LegacyDrawing info into sheet
+// attach LegacyDrawing info into sheet
 func (d *drawingsVML) attachDrawingsRID() {
 	if d.updated && (d.sheet.ml.LegacyDrawing == nil || d.sheet.ml.LegacyDrawing.RID == "") {
 		fileName := d.sheet.relationships.GetTargetByType(internal.RelationTypeVmlDrawing)
@@ -290,7 +291,7 @@ func (d *drawingsVML) attachDrawingsRID() {
 	}
 }
 
-//add shape type for comments if required
+// add shape type for comments if required
 func (d *drawingsVML) initCommentsIfRequired() {
 	if d.initializedComments {
 		return
@@ -322,7 +323,7 @@ func (d *drawingsVML) initCommentsIfRequired() {
 	d.initializedComments = true
 }
 
-//only attach files, no content is loading
+// only attach files, no content is loading
 func (d *drawingsVML) attachFileIfRequired() {
 	//attach sheet relations file
 	d.sheet.attachRelationshipsIfRequired()
@@ -355,7 +356,7 @@ func (d *drawingsVML) attachFileIfRequired() {
 	}
 }
 
-//build indexes for shapes
+// build indexes for shapes
 func (d *drawingsVML) buildIndexes() {
 	for id, s := range d.ml.Shape {
 		_ = d.shapeIndex.Add(s, id)

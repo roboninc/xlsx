@@ -5,14 +5,14 @@
 package xlsx
 
 import (
-	"github.com/plandem/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml"
 )
 
 type columns struct {
 	sheet *sheetInfo
 }
 
-//newColumns creates an object that implements columns functionality (don't miss with Col)
+// newColumns creates an object that implements columns functionality (don't miss with Col)
 func newColumns(sheet *sheetInfo) *columns {
 	return &columns{sheet: sheet}
 }

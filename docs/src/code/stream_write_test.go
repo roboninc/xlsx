@@ -1,8 +1,8 @@
 package code
 
 import (
-	"github.com/plandem/xlsx"
-	"github.com/plandem/xlsx/types"
+	"github.com/roboninc/xlsx"
+	"github.com/roboninc/xlsx/types"
 )
 
 func Example_writeStream() {

@@ -7,18 +7,19 @@ package rule
 import (
 	"errors"
 	"fmt"
-	"github.com/plandem/xlsx/format/styles"
-	"github.com/plandem/xlsx/internal/ml"
-	"github.com/plandem/xlsx/internal/ml/primitives"
 	"strconv"
 	"strings"
+
+	"github.com/roboninc/xlsx/format/styles"
+	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 type textRule struct {
 	baseRule
 }
 
-//Text is helper object to set specific options for rule
+// Text is helper object to set specific options for rule
 var Text textRule
 
 func (x textRule) initIfRequired(r *Info) {
