@@ -55,7 +55,7 @@ func TestSharedStrings(t *testing.T) {
 
 	require.Equal(t, 2, ss.addText(text))
 	require.Equal(t, 3, ss.index.Count())
-	require.Equal(t, 2, ss.addText(&(*text)))
+	require.Equal(t, 2, ss.addText(text))
 
 	require.Equal(t, "new value", fromRichText(ss.get(0)))
 	require.Equal(t, "another value", fromRichText(ss.get(1)))

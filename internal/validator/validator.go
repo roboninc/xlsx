@@ -30,11 +30,7 @@ func FindNamedMatches(pattern *regexp.Regexp, str string) map[string]string {
 func IsWinPath(str string) bool {
 	if regWinPath.MatchString(str) {
 		//check windows path limit see:
-		if len(str) > internal.FilePathLimit {
-			return false
-		}
-
-		return true
+		return len(str) <= internal.FilePathLimit
 	}
 
 	return false
