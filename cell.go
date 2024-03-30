@@ -310,6 +310,31 @@ func (c *Cell) HasFormula() bool {
 	return c.ml.Formula != nil && (*c.ml.Formula != ml.CellFormula{})
 }
 
+// Formula は、Excel関数を取得します。
+func (c *Cell) Formula() (string, error) {
+	// Excel関数が埋め込まれていてもTypeがGeneralの場合があったので含めている
+	if c.ml.Type == types.CellTypeFormula || c.ml.Type == types.CellTypeGeneral {
+		if c.HasFormula() {
+			return c.ml.Formula.Content, nil
+		}
+	}
+
+	return "", errTypeMismatch
+}
+
+// SetFormula は、Excel関数をセットします。
+func (c *Cell) SetFormula(value string) {
+	c.ml.Type = types.CellTypeFormula
+	c.ml.InlineStr = nil
+	c.ml.Value = ""
+
+	if c.ml.Formula == nil {
+		c.ml.Formula = &ml.CellFormula{Content: value}
+	} else {
+		c.ml.Formula.Content = value
+	}
+}
+
 // Styles returns DirectStyleID of active format for cell
 func (c *Cell) Styles() styles.DirectStyleID {
 	return c.ml.Style
