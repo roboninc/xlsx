@@ -217,3 +217,8 @@ func (xl *Spreadsheet) createSpreadsheet() {
 	xl.sharedStrings = newSharedStrings("xl/sharedStrings.xml", xl)
 	xl.styleSheet = newStyleSheet("xl/styles.xml", xl)
 }
+
+// SetFullCalcOnLoad は、WorkBook.CalcPr.FullCalcOnLoad の値を設定します。
+func (xl *Spreadsheet) SetFullCalcOnLoad(v bool) {
+	xl.workbook.setFullCalcOnLoad(v)
+}

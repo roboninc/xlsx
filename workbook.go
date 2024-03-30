@@ -8,6 +8,7 @@ import (
 	"github.com/roboninc/ooxml"
 	"github.com/roboninc/xlsx/internal"
 	"github.com/roboninc/xlsx/internal/ml"
+	"github.com/roboninc/xlsx/internal/ml/primitives"
 )
 
 // workbook is a higher level object that wraps ml.Workbook with functionality
@@ -34,4 +35,20 @@ func newWorkbook(f interface{}, doc *Spreadsheet) *workbook {
 	}
 
 	return wb
+}
+
+// setFullCalcOnLoad は、CalcPr.FullCalcOnLoad の値を設定します。
+func (wb *workbook) setFullCalcOnLoad(v bool) {
+	pr := wb.ml.CalcPr
+	if pr != nil && pr.FullCalcOnLoad != nil && *pr.FullCalcOnLoad == v {
+		return
+	}
+	if pr == nil {
+		wb.ml.CalcPr = &ml.CalcPr{}
+	}
+	if v {
+		wb.ml.CalcPr.CalcMode = primitives.CalcModeAuto
+	}
+	wb.ml.CalcPr.FullCalcOnLoad = &v
+	wb.file.MarkAsUpdated()
 }

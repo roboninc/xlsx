@@ -24,7 +24,7 @@ type Workbook struct {
 	FunctionGroups      *ml.Reserved          `xml:"functionGroups,omitempty"`
 	ExternalReferences  ExternalReferenceList `xml:"externalReferences"`
 	DefinedNames        *ml.Reserved          `xml:"definedNames,omitempty"`
-	CalcPr              *ml.Reserved          `xml:"calcPr,omitempty"`
+	CalcPr              *CalcPr               `xml:"calcPr,omitempty"`
 	OleSize             *ml.Reserved          `xml:"oleSize,omitempty"`
 	CustomWorkbookViews *ml.Reserved          `xml:"customWorkbookViews,omitempty"`
 	PivotCaches         *ml.Reserved          `xml:"pivotCaches,omitempty"`
@@ -97,4 +97,21 @@ type Sheet struct {
 // ExternalReference is a direct mapping of XSD CT_ExternalReference
 type ExternalReference struct {
 	RID ml.RID `xml:"id,attr,omitempty"`
+}
+
+// CalcPr は、XSD CT_CalcPr からのダイレクトマッピングです。
+type CalcPr struct {
+	CalcID                *uint               `xml:"calcId,attr,omitempty"`
+	CalcMode              primitives.CalcMode `xml:"calcMode,attr,omitempty"`
+	FullCalcOnLoad        *bool               `xml:"fullCalcOnLoad,attr,omitempty"`
+	RefMode               primitives.RefMode  `xml:"refMode,attr,omitempty"`
+	Iterate               *bool               `xml:"iterate,attr,omitempty"`
+	IterateCount          *uint               `xml:"iterateCount,attr,omitempty"`
+	IterateDelta          *float64            `xml:"iterateDelta,attr,omitempty"`
+	FullPrecision         *bool               `xml:"fullPrecision,attr,omitempty"`
+	CalcCompleted         *bool               `xml:"calcCompleted,attr,omitempty"`
+	CalcOnSave            *bool               `xml:"calcOnSave,attr,omitempty"`
+	ConcurrentCalc        *bool               `xml:"concurrentCalc,attr,omitempty"`
+	ConcurrentManualCount *uint               `xml:"concurrentManualCount,attr,omitempty"`
+	ForceFullCalc         *bool               `xml:"forceFullCalc,attr,omitempty"`
 }

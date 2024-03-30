@@ -177,14 +177,14 @@ func from(f *Info) (font *ml.Font, fill *ml.Fill, alignment *ml.CellAlignment, n
 }
 
 // private method used by to convert Info to ml.RichFont
-// func toRichFont(f *Info) *ml.RichFont {
-// 	style := f.styleInfo
+func toRichFont(f *Info) *ml.RichFont {
+	style := f.styleInfo
 
-// 	//copy non-empty font
-// 	if (*style.Font != ml.Font{} && *style.Font != ml.Font{Size: 0, Family: 0, Charset: 0}) {
-// 		font := ml.RichFont(*style.Font)
-// 		return &font
-// 	}
+	//copy non-empty font
+	if (*style.Font != ml.Font{} && *style.Font != ml.Font{Size: 0, Family: 0, Charset: 0}) {
+		font := ml.RichFont(*style.Font)
+		return &font
+	}
 
-// 	return nil
-// }
+	return nil
+}
