@@ -138,6 +138,7 @@ type MergeCell struct {
 }
 
 // SheetView is a direct mapping of XSD CT_SheetView
+// ShowGridLines など、デフォルト値が true のものがあるので、bool ポインターに変更
 type SheetView struct {
 	Pane                     *ml.Reserved       `xml:"pane,omitempty"`
 	Selection                []*ml.Reserved     `xml:"selection,omitempty"`
