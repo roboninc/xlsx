@@ -164,7 +164,7 @@ func (s *sheetInfo) SetActive() {
 
 	//set active from worksheet side
 	if len(s.ml.SheetViews.Items) > 0 {
-		s.ml.SheetViews.Items[0].TabSelected = true
+		s.ml.SheetViews.Items[0].TabSelected = &TRUE
 	}
 
 	s.workbook.file.MarkAsUpdated()

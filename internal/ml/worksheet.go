@@ -143,17 +143,17 @@ type SheetView struct {
 	Selection                []*ml.Reserved     `xml:"selection,omitempty"`
 	PivotSelection           []*ml.Reserved     `xml:"pivotSelection,omitempty"`
 	ExtLst                   *ml.Reserved       `xml:"extLst,omitempty"`
-	WindowProtection         bool               `xml:"windowProtection,attr,omitempty"`
-	ShowFormulas             bool               `xml:"showFormulas,attr,omitempty"`
-	ShowGridLines            bool               `xml:"showGridLines,attr,omitempty"`
-	ShowRowColHeaders        bool               `xml:"showRowColHeaders,attr,omitempty"`
-	ShowZeros                bool               `xml:"showZeros,attr,omitempty"`
-	RightToLeft              bool               `xml:"rightToLeft,attr,omitempty"`
-	TabSelected              bool               `xml:"tabSelected,attr,omitempty"`
-	ShowRuler                bool               `xml:"showRuler,attr,omitempty"`
-	ShowOutlineSymbols       bool               `xml:"showOutlineSymbols,attr,omitempty"`
-	DefaultGridColor         bool               `xml:"defaultGridColor,attr,omitempty"`
-	ShowWhiteSpace           bool               `xml:"showWhiteSpace,attr,omitempty"`
+	WindowProtection         *bool              `xml:"windowProtection,attr,omitempty"`
+	ShowFormulas             *bool              `xml:"showFormulas,attr,omitempty"`
+	ShowGridLines            *bool              `xml:"showGridLines,attr,omitempty"`
+	ShowRowColHeaders        *bool              `xml:"showRowColHeaders,attr,omitempty"`
+	ShowZeros                *bool              `xml:"showZeros,attr,omitempty"`
+	RightToLeft              *bool              `xml:"rightToLeft,attr,omitempty"`
+	TabSelected              *bool              `xml:"tabSelected,attr,omitempty"`
+	ShowRuler                *bool              `xml:"showRuler,attr,omitempty"`
+	ShowOutlineSymbols       *bool              `xml:"showOutlineSymbols,attr,omitempty"`
+	DefaultGridColor         *bool              `xml:"defaultGridColor,attr,omitempty"`
+	ShowWhiteSpace           *bool              `xml:"showWhiteSpace,attr,omitempty"`
 	View                     string             `xml:"view,attr,omitempty"` //ST_SheetViewType
 	TopLeftCell              primitives.CellRef `xml:"topLeftCell,attr,omitempty"`
 	ColorId                  uint               `xml:"colorId,attr,omitempty"`

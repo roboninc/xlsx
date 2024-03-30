@@ -21,6 +21,14 @@ import (
 	_ "github.com/roboninc/xlsx/types/options/sheet"
 )
 
+// 真偽値を変数で用意する。
+// Open Office XML の仕様で、デフォルトが true の属性の省略時値を実現するため、bool のポインターを使用する。
+// リテラル値のポインタは使用できないため、bool値のポインターを作るために共通で利用できる変数とする。
+var (
+	TRUE  = true
+	FALSE = false
+)
+
 // Open opens a XLSX file with name or io.Reader
 func Open(f interface{}) (*Spreadsheet, error) {
 	doc, err := ooxml.Open(f, newSpreadsheet)
