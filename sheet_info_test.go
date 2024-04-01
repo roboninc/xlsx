@@ -9,6 +9,8 @@ import (
 
 	"github.com/roboninc/xlsx/internal/ml"
 	"github.com/roboninc/xlsx/internal/ml/primitives"
+	pageOptions "github.com/roboninc/xlsx/types/options/page"
+	printOptions "github.com/roboninc/xlsx/types/options/print"
 	options "github.com/roboninc/xlsx/types/options/sheet"
 	"github.com/stretchr/testify/require"
 )
@@ -42,6 +44,24 @@ func TestSheetInfo(t *testing.T) {
 	require.Equal(t, primitives.VisibilityType(0), xl.workbook.ml.Sheets[0].State)
 	sheet.SetOptions(o)
 	require.Equal(t, options.VisibilityVeryHidden, xl.workbook.ml.Sheets[0].State)
+
+	//test print options
+	pro := printOptions.New(
+		printOptions.HorizontalCentered(true),
+	)
+
+	require.Nil(t, xl.sheets[0].ml.PrintOptions)
+	sheet.SetPrintOptions(pro)
+	require.Equal(t, true, xl.sheets[0].ml.PrintOptions.HorizontalCentered)
+
+	//test page setup
+	pgo := pageOptions.New(
+		pageOptions.Orientation(pageOptions.OrientationLandscape),
+	)
+
+	require.Nil(t, xl.sheets[0].ml.PageSetup)
+	sheet.SetPageSetup(pgo)
+	require.Equal(t, pageOptions.OrientationLandscape, xl.sheets[0].ml.PageSetup.Orientation)
 
 	//test set active
 	require.Equal(t, 0, xl.workbook.ml.BookViews.Items[0].ActiveTab)

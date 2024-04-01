@@ -18,6 +18,8 @@ import (
 	"github.com/roboninc/xlsx/internal"
 	"github.com/roboninc/xlsx/internal/ml"
 	"github.com/roboninc/xlsx/types"
+	pageOptions "github.com/roboninc/xlsx/types/options/page"
+	printOptions "github.com/roboninc/xlsx/types/options/print"
 	options "github.com/roboninc/xlsx/types/options/sheet"
 )
 
@@ -149,6 +151,41 @@ func (s *sheetInfo) SetName(name string) {
 func (s *sheetInfo) SetOptions(o *options.Info) {
 	s.workbook.ml.Sheets[s.index].State = o.Visibility
 	s.workbook.file.MarkAsUpdated()
+}
+
+// SetPrintOptions sets print options for sheet
+func (s *sheetInfo) SetPrintOptions(o *printOptions.Info) {
+	if s.ml.PrintOptions == nil {
+		s.ml.PrintOptions = &ml.PrintOptions{}
+	}
+	s.ml.PrintOptions.HorizontalCentered = o.HorizontalCentered
+	s.ml.PrintOptions.VerticalCentered = o.VerticalCentered
+	s.ml.PrintOptions.Headings = o.Headings
+	s.ml.PrintOptions.GridLines = o.GridLines
+	s.ml.PrintOptions.GridLinesSet = o.GridLinesSet
+}
+
+// SetPageSetup sets page options for sheet
+func (s *sheetInfo) SetPageSetup(o *pageOptions.Info) {
+	if s.ml.PageSetup == nil {
+		s.ml.PageSetup = &ml.PageSetup{}
+	}
+	s.ml.PageSetup.PaperSize = o.PaperSize
+	s.ml.PageSetup.Scale = o.Scale
+	s.ml.PageSetup.FirstPageNumber = o.FirstPageNumber
+	s.ml.PageSetup.FitToWidth = o.FitToWidth
+	s.ml.PageSetup.FitToHeight = o.FitToHeight
+	s.ml.PageSetup.PageOrder = o.PageOrder
+	s.ml.PageSetup.Orientation = o.Orientation
+	s.ml.PageSetup.UsePrinterDefaults = o.UsePrinterDefaults
+	s.ml.PageSetup.BlackAndWhite = o.BlackAndWhite
+	s.ml.PageSetup.Draft = o.Draft
+	s.ml.PageSetup.CellComments = o.CellComments
+	s.ml.PageSetup.UseFirstPageNumber = o.UseFirstPageNumber
+	s.ml.PageSetup.Errors = o.Errors
+	s.ml.PageSetup.HorizontalDpi = o.HorizontalDpi
+	s.ml.PageSetup.VerticalDpi = o.VerticalDpi
+	s.ml.PageSetup.Copies = o.Copies
 }
 
 // SetActive sets the sheet as active

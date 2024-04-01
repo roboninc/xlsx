@@ -7,6 +7,8 @@ package xlsx
 import (
 	"github.com/roboninc/xlsx/format/conditional"
 	"github.com/roboninc/xlsx/types"
+	pageOptions "github.com/roboninc/xlsx/types/options/page"
+	printOptions "github.com/roboninc/xlsx/types/options/print"
 	options "github.com/roboninc/xlsx/types/options/sheet"
 )
 
@@ -80,6 +82,10 @@ type Sheet interface {
 	SetName(name string)
 	//Set sets options for sheet
 	SetOptions(o *options.Info)
+	// SetPrintOptions sets print options for sheet
+	SetPrintOptions(o *printOptions.Info)
+	// SetPageSetup sets page options for sheet
+	SetPageSetup(o *pageOptions.Info)
 	//SetActive sets the sheet as active
 	SetActive()
 	//Close frees allocated by sheet resources

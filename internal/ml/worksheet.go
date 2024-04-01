@@ -37,9 +37,9 @@ type Worksheet struct {
 	ConditionalFormatting *[]*ConditionalFormatting `xml:"conditionalFormatting,omitempty"`
 	DataValidations       *ml.Reserved              `xml:"dataValidations,omitempty"`
 	Hyperlinks            HyperlinkList             `xml:"hyperlinks"`
-	PrintOptions          *ml.Reserved              `xml:"printOptions,omitempty"`
+	PrintOptions          *PrintOptions             `xml:"printOptions,omitempty"`
 	PageMargins           *ml.Reserved              `xml:"pageMargins,omitempty"`
-	PageSetup             *ml.Reserved              `xml:"pageSetup,omitempty"`
+	PageSetup             *PageSetup                `xml:"pageSetup,omitempty"`
 	HeaderFooter          *ml.Reserved              `xml:"headerFooter,omitempty"`
 	RowBreaks             *ml.Reserved              `xml:"rowBreaks,omitempty"`
 	ColBreaks             *ml.Reserved              `xml:"colBreaks,omitempty"`
@@ -256,4 +256,56 @@ type FilterColumn struct {
 	ColId         int          `xml:"colId,attr"`
 	HiddenButton  bool         `xml:"hiddenButton,attr"`
 	ShowButton    *bool        `xml:"showButton,attr"`
+}
+
+// PrintOptions is direct mapping of XSD CT_PrintOptions
+type PrintOptions struct {
+	// horizontalCentered	[0..1]	xsd:boolean	Horizontal Centered	Default value is "false".
+	HorizontalCentered bool `xml:"horizontalCentered,attr,omitempty"`
+	// verticalCentered	[0..1]	xsd:boolean	Vertical Centered	Default value is "false".
+	VerticalCentered bool `xml:"verticalCentered,attr,omitempty"`
+	// headings	[0..1]	xsd:boolean	Print Headings	Default value is "false".
+	Headings bool `xml:"headings,attr,omitempty"`
+	// gridLines	[0..1]	xsd:boolean	Print Grid Lines	Default value is "false".
+	GridLines bool `xml:"gridLines,attr,omitempty"`
+	// gridLinesSet	[0..1]	xsd:boolean	Grid Lines Set	Default value is "true".
+	GridLinesSet *bool `xml:"gridLinesSet,attr,omitempty"`
+}
+
+// PageSetup is direct mapping of XSD CT_PageSetup
+type PageSetup struct {
+	// paperSize	[0..1]	xsd:unsignedInt	Paper Size	Default value is "1".
+	PaperSize *int `xml:"paperSize,attr,omitempty"`
+	// scale	[0..1]	xsd:unsignedInt	Print Scale	Default value is "100".
+	Scale *int `xml:"scale,attr,omitempty"`
+	// firstPageNumber	[0..1]	xsd:unsignedInt	First Page Number	Default value is "1".
+	FirstPageNumber *int `xml:"firstPageNumber,attr,omitempty"`
+	// fitToWidth	[0..1]	xsd:unsignedInt	Fit To Width	Default value is "1".
+	FitToWidth *int `xml:"fitToWidth,attr,omitempty"`
+	// fitToHeight	[0..1]	xsd:unsignedInt	Fit To Height	Default value is "1".
+	FitToHeight *int `xml:"fitToHeight,attr,omitempty"`
+	// pageOrder	[0..1]	ssml:ST_PageOrder	Page Order	Default value is "downThenOver".
+	PageOrder primitives.PageOrderType `xml:"pageOrder,attr,omitempty"`
+	// orientation	[0..1]	ssml:ST_Orientation	Orientation	Default value is "default".
+	Orientation primitives.OrientationType `xml:"orientation,attr,omitempty"`
+	// usePrinterDefaults	[0..1]	xsd:boolean	Use Printer Defaults	Default value is "true".
+	UsePrinterDefaults *bool `xml:"usePrinterDefaults,attr,omitempty"`
+	// blackAndWhite	[0..1]	xsd:boolean	Black and White	Default value is "false".
+	BlackAndWhite bool `xml:"blackAndWhite,attr,omitempty"`
+	// draft	[0..1]	xsd:boolean	Draft	Default value is "false".
+	Draft bool `xml:"draft,attr,omitempty"`
+	// cellComments	[0..1]	ssml:ST_CellComments	Print Cell Comments	Default value is "none".
+	CellComments primitives.CellCommentsType `xml:"cellComments,attr,omitempty"`
+	// useFirstPageNumber	[0..1]	xsd:boolean	Use First Page Number	Default value is "false".
+	UseFirstPageNumber bool `xml:"useFirstPageNumber,attr,omitempty"`
+	// errors	[0..1]	ssml:ST_PrintError	Print Error Handling	Default value is "displayed".
+	Errors primitives.PrintErrorType `xml:"errors,attr,omitempty"`
+	// horizontalDpi	[0..1]	xsd:unsignedInt	Horizontal DPI	Default value is "600".
+	HorizontalDpi *int `xml:"horizontalDpi,attr,omitempty"`
+	// verticalDpi	[0..1]	xsd:unsignedInt	Vertical DPI	Default value is "600".
+	VerticalDpi *int `xml:"verticalDpi,attr,omitempty"`
+	// copies	[0..1]	xsd:unsignedInt	Number Of Copies	Default value is "1".
+	Copies *int `xml:"copies,attr,omitempty"`
+	// r:id	[0..1]	r:ST_RelationshipId	Id
+	RID ml.RID `xml:"id,attr,omitempty"`
 }
