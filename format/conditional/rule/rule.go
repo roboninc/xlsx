@@ -50,7 +50,9 @@ func (r *Info) Validate() error {
 	return nil
 }
 
+//lint:file-ignore U1000 Ignore all unused code
+
 // private method used to access private fields that we want to protect from direct mutating
-// func fromRule(r *Info) (*ml.ConditionalRule, *styles.Info) {
-// 	return r.rule, r.style
-// }
+func fromRule(r *Info) (*ml.ConditionalRule, *styles.Info) {
+	return r.rule, r.style
+}

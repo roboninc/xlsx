@@ -284,9 +284,11 @@ func (s *sheetInfo) Close() {
 
 }
 
+//lint:file-ignore U1000 Ignore all unused code
+
 // afterOpen is callback that will be called right after requesting an already existing sheet. By default, it does nothing
-// func (s *sheetInfo) afterOpen() {
-// }
+func (s *sheetInfo) afterOpen() {
+}
 
 func (s *sheetInfo) attachRelationshipsIfRequired() {
 	if s.relationships == nil {

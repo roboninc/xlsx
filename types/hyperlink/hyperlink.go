@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	sharedML "github.com/roboninc/ooxml/ml"
+	"github.com/roboninc/xlsx/format/styles"
 	"github.com/roboninc/xlsx/internal"
 	"github.com/roboninc/xlsx/internal/ml"
 	"github.com/roboninc/xlsx/internal/validator"
@@ -287,32 +288,34 @@ func ToTarget(target string) Option {
 	}
 }
 
-// private method used by hyperlinks manager to unpack Info
-// func from(info *Info) (hyperlink *ml.Hyperlink, format interface{}, err error) {
-// 	if err = info.Validate(); err != nil {
-// 		return
-// 	}
+//lint:file-ignore U1000 Ignore all unused code
 
-// 	format = info.format
-// 	hyperlink = info.hyperlink
-// 	return
-// }
+// private method used by hyperlinks manager to unpack Info
+func from(info *Info) (hyperlink *ml.Hyperlink, format interface{}, err error) {
+	if err = info.Validate(); err != nil {
+		return
+	}
+
+	format = info.format
+	hyperlink = info.hyperlink
+	return
+}
 
 // private method used by hyperlinks manager to pack Info
-// func to(link *ml.Hyperlink, target string, styleID styles.DirectStyleID) *Info {
-// 	//normalize location
-// 	location := link.Location
-// 	if len(location) > 0 && location[0] != '#' {
-// 		location = "#" + location
-// 	}
+func to(link *ml.Hyperlink, target string, styleID styles.DirectStyleID) *Info {
+	//normalize location
+	location := link.Location
+	if len(location) > 0 && location[0] != '#' {
+		location = "#" + location
+	}
 
-// 	return New(
-// 		Styles(styleID),
-// 		Display(link.Display),
-// 		Tooltip(link.Tooltip),
-// 		ToTarget(target+location),
-// 	)
-// }
+	return New(
+		Styles(styleID),
+		Display(link.Display),
+		Tooltip(link.Tooltip),
+		ToTarget(target+location),
+	)
+}
 
 func escapeLocation(location string) string {
 	// TODO: escape location (research what kind of escaping Excel is expecting)

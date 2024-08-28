@@ -99,22 +99,24 @@ func AddRule(options ...rule.Option) Option {
 	}
 }
 
+//lint:file-ignore U1000 Ignore all unused code
+
 // private method used to unpack Info
-// func from(f *Info) (*ml.ConditionalFormatting, []*styles.Info) {
-// 	if len(f.rules) == 0 {
-// 		return nil, nil
-// 	}
+func from(f *Info) (*ml.ConditionalFormatting, []*styles.Info) {
+	if len(f.rules) == 0 {
+		return nil, nil
+	}
 
-// 	allRules := make([]*ml.ConditionalRule, len(f.rules))
-// 	allStyles := make([]*styles.Info, len(f.rules))
+	allRules := make([]*ml.ConditionalRule, len(f.rules))
+	allStyles := make([]*styles.Info, len(f.rules))
 
-// 	for i, r := range f.rules {
-// 		rInfo, sInfo := fromRule(r)
+	for i, r := range f.rules {
+		rInfo, sInfo := fromRule(r)
 
-// 		allRules[i] = rInfo
-// 		allStyles[i] = sInfo
-// 	}
+		allRules[i] = rInfo
+		allStyles[i] = sInfo
+	}
 
-// 	f.info.Rules = allRules
-// 	return f.info, allStyles
-// }
+	f.info.Rules = allRules
+	return f.info, allStyles
+}
